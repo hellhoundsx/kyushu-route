@@ -48,8 +48,8 @@ PL=[
    "An intact samurai castle town, the turning point of the coast day.",
    "19 Nov &middot; late afternoon","southern end of the run"),
  p(31.5830,130.5420,20,"air","l","Kagoshima",
-   "Fly out to Osaka. Works for an afternoon or evening departure; a morning flight means moving night 3 west to Kirishima.",
-   "20 Nov &middot; departure","1 h 50 m from Miyazaki, 2 h 14 m via Aoshima","Confirm your flight time","warn"),
+   "Car back at 10:00, flight at 17:00, then four nights in Osaka to the 24th. The six hours in between are enough for Sakurajima.",
+   "20 Nov &middot; 17:00 to Osaka","1 h 50 m from Miyazaki, 2 h 14 m via Aoshima","Osaka 20&ndash;24 Nov","ok"),
 
  p(33.2790,131.5000,0,"opt","r","Beppu",
    "Steam vents across a whole hillside and eight distinct hot-spring fields. The biggest onsen town in Kyushu.",
