@@ -122,6 +122,8 @@
     opacity:0; visibility:hidden; transform:translateY(3px); transition:opacity .13s, transform .13s;
     pointer-events:none; display:flex; flex-direction:column; gap:.2rem;
   }
+  .tip.on { pointer-events:auto;
+  }
   .tip.on { opacity:1; visibility:visible; transform:translateY(0); }
   .tip[data-day="17"] { border-left-color:var(--d17); }
   .tip[data-day="18"] { border-left-color:var(--d18); }
@@ -144,6 +146,11 @@
   .tip-s.ok   { color:var(--jade); background:var(--jade-sf); }
   .tip-s.warn { color:var(--verm); background:var(--verm-sf); }
   .tip-s.open { color:var(--stone); background:var(--ground); border:1px solid var(--hair); }
+  .tip-g { font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.05em;
+           margin-top:.3rem; padding-top:.35rem; border-top:1px solid var(--hair); }
+  .tip-g a { color:var(--jade); text-decoration:none; border-bottom:1px solid currentColor; }
+  .tip-g a:hover { border-bottom-width:2px; }
+  .ro-g { font-family:"JetBrains Mono",monospace; font-size:.68rem; margin-top:.2rem; }
 
   .scale line { stroke:var(--ink); stroke-width:1.4; vector-effect:non-scaling-stroke; opacity:.55; }
   .scalelb, .northlb {
@@ -702,6 +709,13 @@
     var t = document.createElement('span'); t.className='rt2'; t.textContent = p.label;
     var n = document.createElement('span'); n.className='rn'; n.textContent = p.note;
     readout.appendChild(k); readout.appendChild(t); readout.appendChild(n);
+    if(p.gmap){
+      var g = document.createElement('span'); g.className = 'ro-g';
+      var a = document.createElement('a');
+      a.href = p.gmap; a.target = '_blank'; a.rel = 'noopener';
+      a.textContent = 'Open in Google Maps \u2192';
+      g.appendChild(a); readout.appendChild(g);
+    }
     Array.prototype.forEach.call(wrap.querySelectorAll('.mk.sel'), function(e){ e.classList.remove('sel'); });
     var mk = wrap.querySelector('.mk[data-i="'+i+'"]'); if(mk) mk.classList.add('sel');
   }
@@ -722,6 +736,7 @@
     if(p.leg)    h += '<span class="tip-l">&rarr; ' + p.leg + '</span>';
     if(p.status) h += '<span class="tip-s ' + (p.sclass || 'open') + '">' + p.status + '</span>';
     if(pic)      h += '<span class="tip-cr">' + pic.c + '</span>';
+    if(p.gmap)   h += '<span class="tip-g"><a href="' + p.gmap + '" target="_blank" rel="noopener">Open in Google Maps &rarr;</a></span>';
     return h;
   }
 
@@ -783,6 +798,9 @@
   bind('.mk'); bind('.lb');
 
   // tapping empty map, scrolling, or Escape dismisses the card
+  tip.addEventListener('mouseenter', cancelHide);
+  tip.addEventListener('mouseleave', armHide);
+  tip.addEventListener('click', function(e){ e.stopPropagation(); });
   wrap.addEventListener('click', hideTip);
   window.addEventListener('scroll', hideTip, { passive:true });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') hideTip(); });

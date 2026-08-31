@@ -89,9 +89,11 @@ PL=[
 places=[]
 for q in PL:
     x,y=P(q["lat"],q["lon"]); L,T=pc(x,y)
+    gmap="https://www.google.com/maps/search/?api=1&amp;query=%.5f%%2C%.5f"%(q["lat"],q["lon"])
     places.append(dict(x=round(x,1),y=round(y,1),l=round(L,3),t=round(T,3),
                        day=q["day"],kind=q["kind"],anc=q["anc"],label=q["label"],note=q["note"],
-                       when=q["when"],leg=q["leg"],status=q["status"],sclass=q["sclass"]))
+                       when=q["when"],leg=q["leg"],status=q["status"],sclass=q["sclass"],
+                       gmap=gmap, lat=q["lat"], lon=q["lon"]))
 byl={p_["label"]:p_ for p_ in places}
 def line(*ls): return " ".join(f'{byl[l]["x"]},{byl[l]["y"]}' for l in ls)
 ROUTES=[("17",line("Fukuoka Airport","Mameda-machi, Hita","Nabegataki Falls","Kurokawa &middot; DeepSpot")),
