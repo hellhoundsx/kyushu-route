@@ -49,6 +49,32 @@
        line-height:1.15; margin:0; text-wrap:balance; }
   .sec > p { margin:0; color:var(--stone); max-width:36em; }
 
+  /* ============ NATIONAL OVERVIEW ============ */
+  .nwrap { position:relative; border:1px solid var(--hair); border-radius:2px;
+           overflow:hidden; background:var(--sea); }
+  svg.nmap { display:block; width:100%; height:auto; }
+  .nsea { fill:var(--sea); }
+  .nland path { fill:var(--land); stroke:var(--coast); stroke-width:1; vector-effect:non-scaling-stroke; }
+  .nleg { fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
+          vector-effect:non-scaling-stroke; }
+  .ndone { stroke:var(--d18); }
+  .ntbd  { stroke:var(--stone); stroke-dasharray:2 7; }
+  .nfly  { fill:none; stroke:var(--verm); stroke-width:2; stroke-dasharray:7 6;
+           stroke-linecap:round; vector-effect:non-scaling-stroke; opacity:.9; }
+  .nmk .nhalo { fill:var(--ground); opacity:.45; }
+  .nmk .ndot { stroke:var(--ground); stroke-width:2.2; vector-effect:non-scaling-stroke; }
+  .nmk-hay .ndot, .nmk-hop .ndot { fill:var(--d18); }
+  .nmk-stay .ndot { fill:var(--stone); }
+  .nmk-via .ndot { fill:var(--surface); stroke:var(--stone); stroke-width:2.6; }
+  .nlb { position:absolute; font-family:"Archivo",sans-serif; font-size:.7rem; font-weight:600;
+         white-space:nowrap; pointer-events:none; color:var(--ink);
+         background:var(--lb-bg); border:1px solid var(--hair); border-radius:2px; padding:.12rem .3rem; }
+  .nlb-stay, .nlb-via { font-weight:400; color:var(--stone); }
+  .nlb-r { transform:translate(12px,-50%); }
+  .nlb-l { transform:translate(calc(-100% - 12px),-50%); }
+  .nlb-t { transform:translate(-50%,calc(-100% - 11px)); }
+  .nlb-b { transform:translate(-50%,11px); }
+
   /* ===================== MAP ===================== */
   .mapsec { display:flex; flex-direction:column; gap:.9rem; }
   .chips { display:flex; flex-wrap:wrap; gap:.35rem; }
@@ -313,7 +339,34 @@
     <p class="standfirst">Seventeen nights, and the first three are the only ones with a steering wheel in them. This page plans the Kyushu drive in full; Osaka, Kyoto and Tokyo are on it as dates, not yet as plans. Every bed listed here is en-suite or a whole house — no shared bathrooms. Everything in between is driving. Tap any point on the map.</p>
   </header>
 
+  <section class="sec">
+    <h2>The whole trip</h2>
+    <p>Four legs, 17 nights. Only the first has a car in it, and only the first is planned.</p>
+    <div class="nwrap">
+@@NATIONAL@@
+    </div>
+    <div class="legend">
+      <span><i style="border-top-color:var(--d18)"></i> Kyushu, by car &mdash; planned</span>
+      <span><i style="border-top-color:var(--verm);border-top-style:dashed"></i> flights</span>
+      <span><i style="border-top-color:var(--stone);border-top-style:dotted"></i> by rail &mdash; TBD</span>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th scope="col">Leg</th><th scope="col">Dates</th><th scope="col">Nights</th><th scope="col">Getting there</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><td>Kyushu, by car</td><td class="km">17&ndash;20 Nov</td><td class="num">3</td><td>fly in from Tokyo, then drive</td><td style="color:var(--jade)">planned</td></tr>
+          <tr><td>Osaka</td><td class="km">20&ndash;24 Nov</td><td class="num">4</td><td>fly Kagoshima &rarr; Osaka, 17:00</td><td style="color:var(--amber)">TBD</td></tr>
+          <tr><td>Kyoto, via Nara</td><td class="km">24&ndash;28 Nov</td><td class="num">4</td><td>rail, Nara on the way</td><td style="color:var(--amber)">TBD</td></tr>
+          <tr><td>Tokyo</td><td class="km">28 Nov &ndash; 4 Dec</td><td class="num">6</td><td>Shinkansen from Kyoto</td><td style="color:var(--amber)">TBD</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
   <section class="mapsec">
+    <h2 style="margin-bottom:-.2rem">Leg 1 &middot; Kyushu, by car</h2>
+    <p style="margin:0 0 .2rem;color:var(--stone)">17&ndash;20 November. Everything below is this leg &mdash; the only
+    one with a steering wheel, and the only one planned in full.</p>
     <div class="chips" role="group" aria-label="Filter the map">
       <button class="chip" data-f="all" aria-pressed="true">THE WHOLE ROUTE</button>
       <button class="chip" data-f="17" aria-pressed="false">17 NOV</button>

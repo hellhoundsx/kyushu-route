@@ -15,6 +15,8 @@ for r in pics:
     t="%s (%s)"%(r["author"] or "unknown", r["lic"])
     if t not in seen: seen.append(t)
 out=out.replace("@@CREDITS@@", "; ".join(seen))
+nsvg,nlab=open(S+"national.frag.html").read().split("\n<!--NLABELS-->\n")
+out=out.replace("@@NATIONAL@@", nsvg+"\n"+nlab)
 def ascii_esc(t):
     return "".join(c if ord(c)<128 else "&#%d;"%ord(c) for c in t)
 out=ascii_esc(out)
