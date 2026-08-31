@@ -110,10 +110,27 @@ o.append('</g>')
 for day,pts in ROUTES:
     o.append(f'<polyline class="rt rt{day}" data-day="{day}" points="{pts}"/>')
 fk=byl["Fukuoka Airport"]; kg=byl["Kagoshima"]
-o.append(f'<path class="fly" d="M{fk["x"]+228},{fk["y"]-61} Q{fk["x"]+118},{fk["y"]-52} {fk["x"]+15},{fk["y"]-6}"/>')
-o.append(f'<path class="flyhead" d="M{fk["x"]+15},{fk["y"]-6} l16,-3 l-4,11 z"/>')
-o.append(f'<path class="fly" d="M{kg["x"]+14},{kg["y"]-10} Q{kg["x"]+64},{kg["y"]-44} {kg["x"]+124},{kg["y"]-92}"/>')
-o.append(f'<path class="flyhead" d="M{kg["x"]+124},{kg["y"]-92} l-4,15 l13,-6 z"/>')
+
+def head(tip, ctrl, L=17.0, W=6.0):
+    """Arrowhead built from the curve's end tangent, so it always points along the line."""
+    tx,ty = tip; cx,cy = ctrl
+    dx,dy = tx-cx, ty-cy                       # tangent at the tip = tip - control point
+    n = math.hypot(dx,dy) or 1.0
+    dx,dy = dx/n, dy/n
+    bx,by = tx-dx*L, ty-dy*L                   # base centre, L behind the tip
+    px,py = -dy, dx                            # unit normal
+    return (f'M{tx:.1f},{ty:.1f} L{bx+px*W:.1f},{by+py*W:.1f} '
+            f'L{bx-px*W:.1f},{by-py*W:.1f} Z')
+
+# inbound from Tokyo: ENE, 15 deg above horizontal, arriving westward into Fukuoka
+IN_START=(fk["x"]+228, fk["y"]-61); IN_CTRL=(fk["x"]+118, fk["y"]-52); IN_TIP=(fk["x"]+15, fk["y"]-6)
+o.append(f'<path class="fly" d="M{IN_START[0]},{IN_START[1]} Q{IN_CTRL[0]},{IN_CTRL[1]} {IN_TIP[0]},{IN_TIP[1]}"/>')
+o.append(f'<path class="flyhead" d="{head(IN_TIP, IN_CTRL)}"/>')
+
+# outbound to Osaka: NE, 36.6 deg above horizontal
+OUT_START=(kg["x"]+14, kg["y"]-10); OUT_CTRL=(kg["x"]+64, kg["y"]-44); OUT_TIP=(kg["x"]+124, kg["y"]-92)
+o.append(f'<path class="fly" d="M{OUT_START[0]},{OUT_START[1]} Q{OUT_CTRL[0]},{OUT_CTRL[1]} {OUT_TIP[0]},{OUT_TIP[1]}"/>')
+o.append(f'<path class="flyhead" d="{head(OUT_TIP, OUT_CTRL)}"/>')
 for i,q in enumerate(places):
     X,Y=q["x"],q["y"]
     o.append(f'<g class="mk mk-{q["kind"]}" data-day="{q["day"]}" data-i="{i}" tabindex="0" role="button" aria-label="{q["label"]}">')
