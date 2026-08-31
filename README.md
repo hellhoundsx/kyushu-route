@@ -1,6 +1,13 @@
-# Kyushu Ground Route — 17–20 Nov 2026
+# Japan, 17 Nov – 4 Dec 2026 — 17 nights
 
-A single-page driving plan for Fukuoka → Kurokawa Onsen → Aso → Takachiho → Miyazaki → Kagoshima.
+Kyushu by car (17–20 Nov) planned in full, then Osaka, Kyoto via Nara, and Tokyo recorded as dates awaiting plans.
+
+| Leg | Dates | Nights | Status |
+|---|---|---|---|
+| Kyushu, by car | 17–20 Nov | 3 | planned |
+| Osaka | 20–24 Nov | 4 | TBD |
+| Kyoto, via Nara | 24–28 Nov | 4 | TBD |
+| Tokyo | 28 Nov – 4 Dec | 6 | TBD |
 
 **Live page:** https://hellhoundsx.github.io/kyushu-route/
 
