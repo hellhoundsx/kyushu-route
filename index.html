@@ -273,6 +273,12 @@
   .nt-s.ok   { color:var(--jade); background:var(--jade-sf); }
   .nt-s.warn { color:var(--verm); background:var(--verm-sf); }
   .nt-s.open { color:var(--stone); background:var(--ground); border:1px solid var(--hair); }
+  .nt-s.tbd  { color:var(--amber); background:var(--ground); border:1px dashed var(--amber); }
+  .nt.nOsk { border-left-color:var(--stone); border-left-style:dashed; }
+  .day.dOsk .dnum, .day.dOsk .dmon { color:var(--stone); }
+  .day.dOsk .dtitle { color:var(--stone); }
+  .day.dOsk .dsleep { color:var(--amber); }
+  .day.dOsk .stops li::before { background:var(--stone); }
   .nt-n { grid-column:1 / -1; font-size:.88rem; color:var(--stone); margin-top:.25rem; }
 
   .chan { display:flex; flex-direction:column; gap:.6rem; }
@@ -469,8 +475,8 @@
   </section>
 
   <section class="sec">
-    <h2>Three nights, three states</h2>
-    <p>The filled markers on the map are the beds. Only one of them is actually settled.</p>
+    <h2>Where you sleep</h2>
+    <p>Seven nights: three on the road through Kyushu, four in Osaka. One of them is actually settled.</p>
     <div class="nights">
       <div class="nt n17">
         <span class="nt-d">Night 1 &middot; 17 Nov</span>
@@ -489,6 +495,13 @@
         <span class="nt-p">Miyazaki</span>
         <span class="nt-s open">Options found</span>
         <span class="nt-n">49 en-suite options for two rooms. Territory25 at &#8364;187 is the pick &#8212; two triple rooms, central, and an easy 07:45 getaway for the 10:00 car return in Kagoshima.</span>
+      </div>
+      <div class="nt nOsk">
+        <span class="nt-d">Nights 4&#8211;7 &#183; 20&#8211;23 Nov</span>
+        <span class="nt-p">Osaka</span>
+        <span class="nt-s tbd">TBD</span>
+        <span class="nt-n">Four nights, checking out on the 24th. Not planned yet &#8212; a different problem from Kyushu: a city,
+        no car, trains rather than drive times, and accommodation that actually has availability.</span>
       </div>
     </div>
   </section>
@@ -703,6 +716,18 @@
           turns the 20th into a 50-minute hop.</p></div>
       </article>
 
+      <article class="day dOsk">
+        <div class="daymark"><span class="dnum">20</span><span class="dmon">&#8211;24</span></div>
+        <div class="dbody">
+          <p class="dtitle">Osaka</p>
+          <p class="dsleep">Four nights &#183; TBD</p>
+          <ul class="stops">
+            <li><span><b>Nothing planned yet</b><small>Land from Kagoshima on the evening of the 20th, check out on the
+            24th. Off this map, and a different kind of trip &#8212; no car, trains instead of drive times.</small></span></li>
+          </ul>
+        </div>
+      </article>
+
     </div>
   </section>
 
@@ -777,9 +802,10 @@
     <h2>Still open</h2>
     <div class="qs">
       <div class="q">
-        <h3>Where does the car go back &#8212; city or airport?</h3>
-        <p>The last thing that changes the shape of a day. City means Sakurajima fills the 20th. Airport means seven
-        hours in a departure hall, and that morning would be better spent driving to Kirishima instead.</p>
+        <h3>Where the car goes back &#8212; being decided</h3>
+        <p>City means Sakurajima fills the 20th. Airport means seven hours in a departure hall, and that morning would
+        be better spent driving to Kirishima instead. Day 20 above assumes the city; if it turns out to be the airport,
+        that day needs re-cutting.</p>
       </div>
       <div class="q">
         <h3>Two nights still unbooked</h3>
