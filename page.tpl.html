@@ -83,6 +83,10 @@
   .ntbd  { stroke:var(--stone); stroke-dasharray:2 7; }
   .nfly  { fill:none; stroke:var(--verm); stroke-width:2; stroke-dasharray:7 6;
            stroke-linecap:round; vector-effect:non-scaling-stroke; opacity:.9; }
+  .nfly-in { opacity:.62; }
+  .nlb-fly { font-family:"JetBrains Mono",monospace; font-size:.6rem; font-weight:600;
+             letter-spacing:.06em; color:var(--verm); background:var(--lb-bg);
+             border-color:transparent; }
   .nmk .nhalo { fill:var(--ground); opacity:.45; }
   .nmk .ndot { stroke:var(--ground); stroke-width:2.2; vector-effect:non-scaling-stroke; }
   .nmk-hay .ndot, .nmk-hop .ndot { fill:var(--d18); }
@@ -316,6 +320,8 @@
   .nt-s.open { color:var(--stone); background:var(--ground); border:1px solid var(--hair); }
   .nt-s.tbd  { color:var(--amber); background:var(--ground); border:1px dashed var(--amber); }
   .nt.nOsk { border-left-color:var(--stone); border-left-style:dashed; }
+  .nt.nAir { border-left-color:var(--verm); border-left-style:dotted; }
+  .nt-s.air { color:var(--verm); background:var(--verm-sf); }
   .day.dOsk .dnum, .day.dOsk .dmon { color:var(--stone); }
   .day.dOsk .dtitle { color:var(--stone); }
   .day.dOsk .dsleep { color:var(--amber); }
@@ -356,9 +362,9 @@
 <div class="wrap">
 
   <header class="mast">
-    <p class="eyebrow">17 Nov – 4 Dec 2026 · 4 travellers · 17 nights · Kyushu, Osaka, Kyoto, Tokyo</p>
+    <p class="eyebrow">16 Nov – 4 Dec 2026 · 4 travellers · 18 nights · Tokyo, Kyushu, Osaka, Kyoto, Tokyo</p>
     <h1>Kyushu to <em>Tokyo</em></h1>
-    <p class="standfirst">Four legs and seventeen nights, of which only the first three have a steering wheel in them. Every bed is en-suite or a whole house — no shared bathrooms anywhere. Pick a leg above.</p>
+    <p class="standfirst">Eighteen nights, seventeen of them in a bed — the first is spent in Tokyo airport. Only three have a steering wheel in them. Every bed is en-suite or a whole house, no shared bathrooms anywhere. Pick a leg above.</p>
   </header>
 
     <div class="tabs" role="tablist" aria-label="Trip legs">
@@ -372,20 +378,21 @@
   <div class="panel" id="p-trip" role="tabpanel" aria-labelledby="t-trip">
 <section class="sec">
     <h2>The whole trip</h2>
-    <p>Four legs, 17 nights. Only the first has a car in it, and only the first is planned.</p>
+    <p>An airport night, then four legs. Eighteen nights in total, of which only the Kyushu leg has a car in it &mdash; and only the Kyushu leg is planned.</p>
     <div class="nwrap">
 @@NATIONAL@@
     </div>
     <div class="legend">
       <span><i style="border-top-color:var(--d18)"></i> Kyushu, by car &mdash; planned</span>
-      <span><i style="border-top-color:var(--verm);border-top-style:dashed"></i> flights</span>
+      <span><i style="border-top-color:var(--verm);border-top-style:dashed"></i> flights &mdash; in on the 17th, out on the 20th</span>
       <span><i style="border-top-color:var(--stone);border-top-style:dotted"></i> by rail &mdash; TBD</span>
     </div>
     <div class="scroll">
       <table>
         <thead><tr><th scope="col">Leg</th><th scope="col">Dates</th><th scope="col">Nights</th><th scope="col">Getting there</th><th scope="col">Status</th></tr></thead>
         <tbody>
-          <tr><td>Kyushu, by car</td><td class="km">17&ndash;20 Nov</td><td class="num">3</td><td>fly in from Tokyo, then drive</td><td style="color:var(--jade)">planned</td></tr>
+          <tr><td>Tokyo airport</td><td class="km">16&ndash;17 Nov</td><td class="num">1</td><td>fly in, sleep in the terminal</td><td style="color:var(--stone)">no bed needed</td></tr>
+          <tr><td>Kyushu, by car</td><td class="km">17&ndash;20 Nov</td><td class="num">3</td><td>morning flight to Fukuoka, then drive</td><td style="color:var(--jade)">planned</td></tr>
           <tr><td>Osaka</td><td class="km">20&ndash;24 Nov</td><td class="num">4</td><td>fly Kagoshima &rarr; Osaka, 17:00</td><td style="color:var(--amber)">TBD</td></tr>
           <tr><td>Kyoto, via Nara</td><td class="km">24&ndash;28 Nov</td><td class="num">4</td><td>rail, Nara on the way</td><td style="color:var(--amber)">TBD</td></tr>
           <tr><td>Tokyo</td><td class="km">28 Nov &ndash; 4 Dec</td><td class="num">6</td><td>Shinkansen from Kyoto</td><td style="color:var(--amber)">TBD</td></tr>
@@ -396,8 +403,15 @@
 
   <section class="sec">
     <h2>Where you sleep</h2>
-    <p>Seventeen nights across four legs. One of them is actually settled.</p>
+    <p>Eighteen nights. Seventeen need a bed; the first does not. One of them is actually settled.</p>
     <div class="nights">
+      <div class="nt nAir">
+        <span class="nt-d">Night 0 · 16 Nov</span>
+        <span class="nt-p">Tokyo airport</span>
+        <span class="nt-s air">No bed</span>
+        <span class="nt-n">Land on the 16th and sleep in the terminal, then the morning flight to Fukuoka. Worth
+        confirming which Tokyo airport each flight uses — see the open question on the overview.</span>
+      </div>
       <div class="nt n17">
         <span class="nt-d">Night 1 &middot; 17 Nov</span>
         <span class="nt-p">Kurokawa Onsen &mdash; DeepSpot</span>
@@ -443,6 +457,13 @@
   <section class="sec">
     <h2>Still open</h2>
     <div class="qs">
+      <div class="q">
+        <h3>Which Tokyo airport, on both the 16th and the 17th?</h3>
+        <p>This is the one that could break the start. If you land at Narita but the Fukuoka flight leaves from
+        Haneda, that is a cross-city transfer of roughly two hours, and the first trains do not run early enough
+        for a flight that puts you in Fukuoka at 09:00. Same airport for both and the plan is simple. Also worth
+        checking which terminal stays open overnight — not all of them do.</p>
+      </div>
       <div class="q">
         <h3>Where the car goes back — being decided</h3>
         <p>City means Sakurajima fills the 20th. Airport means seven hours in a departure hall, and that morning would
@@ -653,7 +674,7 @@
           <p class="dtitle">Land at Fukuoka, drive south to the onsen</p>
           <p class="dsleep">Sleep · DeepSpot — booked</p>
           <ul class="stops">
-            <li><span><b>09:00 land from Tokyo · 10:00 collect the car</b><small>Fukuoka to Kurokawa is only 1 h 45 m direct, so the afternoon is genuinely yours rather than a transfer.</small></span></li>
+            <li><span><b>Morning flight from Tokyo, landing 09:00 · car at 10:00</b><small>After a night in the terminal. Fukuoka to Kurokawa is only 1 h 45 m direct, so the afternoon is genuinely yours rather than a transfer.</small></span></li>
             <li><span><b>Mameda-machi, Hita</b> — lunch<small>A preserved Edo merchant street of white-walled townhouses, sitting directly on the route. An hour is enough.</small></span></li>
             <li><span><b>Nabegataki Falls</b> — pre-booked slot<small>A wide, low curtain of water you walk behind.</small></span></li>
             <li><span><b>Kurokawa Onsen village</b> — evening<small>Buy the <i>tegata</i> pass, around ¥1,500 for three baths. The village is at its best after dark in a yukata.</small></span></li>
