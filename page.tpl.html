@@ -97,7 +97,7 @@
 
   .lb {
     position:absolute; font-family:"Archivo",sans-serif; font-size:.72rem; font-weight:600;
-    line-height:1.25; white-space:nowrap; pointer-events:auto; cursor:pointer;
+    line-height:1.25; white-space:nowrap; pointer-events:none;
     background:var(--lb-bg); color:var(--ink); padding:.14rem .32rem; border-radius:2px;
     border:1px solid var(--hair); transition:opacity .18s;
   }
@@ -795,7 +795,7 @@
       });
     });
   }
-  bind('.mk'); bind('.lb');
+  bind('.mk');
 
   // tapping empty map, scrolling, or Escape dismisses the card
   tip.addEventListener('mouseenter', cancelHide);
