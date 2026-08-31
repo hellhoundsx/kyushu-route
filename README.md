@@ -11,6 +11,12 @@ Kyushu by car (17–20 Nov) planned in full, then Osaka, Kyoto via Nara, and Tok
 
 **Live page:** https://hellhoundsx.github.io/kyushu-route/
 
+Tabbed by leg, deep-linkable: [#trip](https://hellhoundsx.github.io/kyushu-route/#trip) ·
+[#kyushu](https://hellhoundsx.github.io/kyushu-route/#kyushu) ·
+[#osaka](https://hellhoundsx.github.io/kyushu-route/#osaka) ·
+[#kyoto](https://hellhoundsx.github.io/kyushu-route/#kyoto) ·
+[#tokyo](https://hellhoundsx.github.io/kyushu-route/#tokyo)
+
 ## What's in it
 
 - An interactive SVG map of Kyushu built from open prefecture geometry, projected to scale — no tile server, no external JS.

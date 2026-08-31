@@ -49,6 +49,28 @@
        line-height:1.15; margin:0; text-wrap:balance; }
   .sec > p { margin:0; color:var(--stone); max-width:36em; }
 
+  /* ===================== TABS ===================== */
+  .tabs { display:flex; flex-wrap:wrap; gap:.15rem; border-bottom:1px solid var(--hair);
+          margin:-1rem 0 -1rem; }
+  .tab { appearance:none; background:none; border:none; cursor:pointer;
+         font-family:"Archivo",sans-serif; font-size:.94rem; font-weight:500; color:var(--stone);
+         padding:.55rem .8rem; border-bottom:2px solid transparent; margin-bottom:-1px;
+         display:flex; align-items:center; gap:.4rem; line-height:1.2; }
+  .tab:hover { color:var(--ink); }
+  .tab[aria-selected="true"] { color:var(--ink); border-bottom-color:var(--jade); font-weight:600; }
+  .tab:focus-visible { outline:2px solid var(--jade); outline-offset:-2px; border-radius:2px; }
+  .tab-n { font-family:"JetBrains Mono",monospace; font-size:.62rem; color:var(--stone);
+           border:1px solid var(--hair); border-radius:2px; padding:.05rem .26rem; }
+  .tab[aria-selected="true"] .tab-n { color:var(--jade); border-color:var(--jade); }
+  .panel { display:flex; flex-direction:column; gap:3rem; }
+  .panel[hidden] { display:none; }
+
+  .tbdbox { border:1px dashed var(--hair); border-left:3px dashed var(--amber);
+            border-radius:2px; padding:.85rem 1rem; background:var(--surface); }
+  .tbd-t { font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.12em;
+           text-transform:uppercase; color:var(--amber); margin:0 0 .25rem; }
+  .tbd-n { margin:0; font-size:.92rem; color:var(--stone); }
+
   /* ============ NATIONAL OVERVIEW ============ */
   .nwrap { position:relative; border:1px solid var(--hair); border-radius:2px;
            overflow:hidden; background:var(--sea); }
@@ -335,11 +357,20 @@
 
   <header class="mast">
     <p class="eyebrow">17 Nov – 4 Dec 2026 · 4 travellers · 17 nights · Kyushu, Osaka, Kyoto, Tokyo</p>
-    <h1>Kyushu, <em>north to south</em></h1>
-    <p class="standfirst">Seventeen nights, and the first three are the only ones with a steering wheel in them. This page plans the Kyushu drive in full; Osaka, Kyoto and Tokyo are on it as dates, not yet as plans. Every bed listed here is en-suite or a whole house — no shared bathrooms. Everything in between is driving. Tap any point on the map.</p>
+    <h1>Kyushu to <em>Tokyo</em></h1>
+    <p class="standfirst">Four legs and seventeen nights, of which only the first three have a steering wheel in them. Every bed is en-suite or a whole house — no shared bathrooms anywhere. Pick a leg above.</p>
   </header>
 
-  <section class="sec">
+    <div class="tabs" role="tablist" aria-label="Trip legs">
+    <button class="tab" id="t-trip"   role="tab" aria-controls="p-trip"   aria-selected="true"  data-p="trip">The whole trip</button>
+    <button class="tab" id="t-kyushu" role="tab" aria-controls="p-kyushu" aria-selected="false" data-p="kyushu"><span class="tab-n">1</span> Kyushu</button>
+    <button class="tab" id="t-osaka"  role="tab" aria-controls="p-osaka"  aria-selected="false" data-p="osaka"><span class="tab-n">2</span> Osaka</button>
+    <button class="tab" id="t-kyoto"  role="tab" aria-controls="p-kyoto"  aria-selected="false" data-p="kyoto"><span class="tab-n">3</span> Kyoto</button>
+    <button class="tab" id="t-tokyo"  role="tab" aria-controls="p-tokyo"  aria-selected="false" data-p="tokyo"><span class="tab-n">4</span> Tokyo</button>
+  </div>
+
+  <div class="panel" id="p-trip" role="tabpanel" aria-labelledby="t-trip">
+<section class="sec">
     <h2>The whole trip</h2>
     <p>Four legs, 17 nights. Only the first has a car in it, and only the first is planned.</p>
     <div class="nwrap">
@@ -360,44 +391,6 @@
           <tr><td>Tokyo</td><td class="km">28 Nov &ndash; 4 Dec</td><td class="num">6</td><td>Shinkansen from Kyoto</td><td style="color:var(--amber)">TBD</td></tr>
         </tbody>
       </table>
-    </div>
-  </section>
-
-  <section class="mapsec">
-    <h2 style="margin-bottom:-.2rem">Leg 1 &middot; Kyushu, by car</h2>
-    <p style="margin:0 0 .2rem;color:var(--stone)">17&ndash;20 November. Everything below is this leg &mdash; the only
-    one with a steering wheel, and the only one planned in full.</p>
-    <div class="chips" role="group" aria-label="Filter the map">
-      <button class="chip" data-f="all" aria-pressed="true">THE WHOLE ROUTE</button>
-      <button class="chip" data-f="17" aria-pressed="false">17 NOV</button>
-      <button class="chip" data-f="18" aria-pressed="false">18 NOV</button>
-      <button class="chip" data-f="19" aria-pressed="false">19 NOV</button>
-      <button class="chip" data-f="20" aria-pressed="false">20 NOV</button>
-      <button class="chip" data-f="opt" aria-pressed="false">+ COULD ADD</button>
-    </div>
-
-    <div class="mapwrap" id="mapwrap" data-f="all">
-@@MAP@@
-@@LABELS@@
-      <div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
-      <span class="scalelb">50 km</span>
-      <span class="northlb">N &uarr;</span>
-    </div>
-
-    <div class="legend">
-      <span><i style="border-top-color:var(--d17)"></i> 17 Nov</span>
-      <span><i style="border-top-color:var(--d18)"></i> 18 Nov</span>
-      <span><i style="border-top-color:var(--d19)"></i> 19 Nov</span>
-      <span><i style="border-top-color:var(--d20)"></i> 20 Nov</span>
-      <span><i class="donut"></i> where you sleep</span>
-      <span><i class="dotm"></i> could add</span>
-      <span><i style="border-top-color:var(--verm);border-top-style:dashed"></i> flights</span>
-    </div>
-
-    <div class="readout" id="readout" aria-live="polite">
-      <span class="rk">The map</span>
-      <span class="rt2">Real coastline, real positions</span>
-      <span class="rn">Prefecture outlines from open geographic data, projected to scale. Tap any marker for what happens there. Distances are measured driving times, not straight lines.</span>
     </div>
   </section>
 
@@ -443,6 +436,97 @@
         <span class="nt-s tbd">TBD</span>
         <span class="nt-n">Six nights, the longest stay, flying out on the 4th. Enough time that the choice of district
         matters more than the hotel.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Still open</h2>
+    <div class="qs">
+      <div class="q">
+        <h3>Where the car goes back — being decided</h3>
+        <p>City means Sakurajima fills the 20th. Airport means seven hours in a departure hall, and that morning would
+        be better spent driving to Kirishima instead. Day 20 above assumes the city; if it turns out to be the airport,
+        that day needs re-cutting.</p>
+      </div>
+      <div class="q">
+        <h3>Two nights still unbooked</h3>
+        <p>Takachiho on the 18th needs a phone call — nothing en-suite is bookable online in the town itself except
+        Guest House Iwato, and that is one room for four. Miyazaki on the 19th is a click away whenever you want it.</p>
+      </div>
+      <div class="q">
+        <h3>2026 Kumamoto Earthquake advisory</h3>
+        <p>The Takachiho tourism board carries an advisory dated 14 August. It reports no damage in Takachiho itself — it asks anyone travelling to Kumamoto Prefecture to confirm that accommodation and attractions are operating, via the Japan Tourism Agency and <a href="https://www.japan.travel/en/">JNTO</a> status pages. Kurokawa and Aso are inside that prefecture. Every leg here routed normally, which suggests the main roads are open, but that is not confirmation. Verify before anything becomes non-refundable.</p>
+      </div>
+    </div>
+  </section>
+
+  
+  </div>
+
+  <div class="panel" id="p-kyushu" role="tabpanel" aria-labelledby="t-kyushu" hidden>
+<section class="mapsec">
+    <h2 style="margin-bottom:-.2rem">Leg 1 &middot; Kyushu, by car</h2>
+    <p style="margin:0 0 .2rem;color:var(--stone)">17&ndash;20 November, Fukuoka to Kagoshima. The only leg with a car, and the only one planned in full.
+    Hover or tap any circle on the map.</p>
+    <div class="chips" role="group" aria-label="Filter the map">
+      <button class="chip" data-f="all" aria-pressed="true">THE WHOLE ROUTE</button>
+      <button class="chip" data-f="17" aria-pressed="false">17 NOV</button>
+      <button class="chip" data-f="18" aria-pressed="false">18 NOV</button>
+      <button class="chip" data-f="19" aria-pressed="false">19 NOV</button>
+      <button class="chip" data-f="20" aria-pressed="false">20 NOV</button>
+      <button class="chip" data-f="opt" aria-pressed="false">+ COULD ADD</button>
+    </div>
+
+    <div class="mapwrap" id="mapwrap" data-f="all">
+@@MAP@@
+@@LABELS@@
+      <div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
+      <span class="scalelb">50 km</span>
+      <span class="northlb">N &uarr;</span>
+    </div>
+
+    <div class="legend">
+      <span><i style="border-top-color:var(--d17)"></i> 17 Nov</span>
+      <span><i style="border-top-color:var(--d18)"></i> 18 Nov</span>
+      <span><i style="border-top-color:var(--d19)"></i> 19 Nov</span>
+      <span><i style="border-top-color:var(--d20)"></i> 20 Nov</span>
+      <span><i class="donut"></i> where you sleep</span>
+      <span><i class="dotm"></i> could add</span>
+      <span><i style="border-top-color:var(--verm);border-top-style:dashed"></i> flights</span>
+    </div>
+
+    <div class="readout" id="readout" aria-live="polite">
+      <span class="rk">The map</span>
+      <span class="rt2">Real coastline, real positions</span>
+      <span class="rn">Prefecture outlines from open geographic data, projected to scale. Tap any marker for what happens there. Distances are measured driving times, not straight lines.</span>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Book these before you fly</h2>
+    <p>All online-only, all sell out. Two have cut-offs that fall before you land, and one has already mostly gone.</p>
+    <div class="deadlines">
+      <div class="dl">
+        <div class="dl-top">
+          <span class="dl-what">A bed in Takachiho — 18 Nov</span>
+          <span class="dl-when">almost gone</span>
+        </div>
+        <p class="dl-note">Booking shows <b>one</b> property left in Takachiho for your night. A control search on a normal midweek date shows six, so this is peak-foliage scarcity, not thin coverage. Guest House Iwato is the last one — €75 for four, free cancellation, nothing to pay up front, so hold it today. Then hunt Jalan, Rakuten Travel or direct, where the ryokan actually sell. Airbnb has nothing whole-house in town; its best offer is Cottage-Blue in Gokase, 2 bedrooms and 2 bathrooms for €137, 14 km out.</p>
+      </div>
+      <div class="dl">
+        <div class="dl-top">
+          <span class="dl-what">Takachiho Gorge rental boat — 19 Nov</span>
+          <span class="dl-when">opens 5 Nov · shuts 17 Nov 09:00</span>
+        </div>
+        <p class="dl-note">The window opens exactly two weeks ahead and closes 9:00 AM two days before your slot. Online only — no phone, no time-slot requests, no waitlist. Same-day tickets are sold at the gorge reception in the morning only. Operating hours are decided each morning around 8:00 on water level and weather.</p>
+      </div>
+      <div class="dl">
+        <div class="dl-top">
+          <span class="dl-what">Nabegataki Falls — 14:00 or 15:00 on the 17th</span>
+          <span class="dl-when">refundable until 14 Nov</span>
+        </div>
+        <p class="dl-note">Advance online booking only, in timed slots. ¥300 an adult, 9:00–17:00 with last entry 16:30, capped at 40 minutes to an hour with no re-entry. Book it for arrival day rather than the 18th — that swap is what makes the crater fit.</p>
       </div>
     </div>
   </section>
@@ -560,34 +644,6 @@
   </section>
 
   <section class="sec">
-    <h2>Book these before you fly</h2>
-    <p>All online-only, all sell out. Two have cut-offs that fall before you land, and one has already mostly gone.</p>
-    <div class="deadlines">
-      <div class="dl">
-        <div class="dl-top">
-          <span class="dl-what">A bed in Takachiho — 18 Nov</span>
-          <span class="dl-when">almost gone</span>
-        </div>
-        <p class="dl-note">Booking shows <b>one</b> property left in Takachiho for your night. A control search on a normal midweek date shows six, so this is peak-foliage scarcity, not thin coverage. Guest House Iwato is the last one — €75 for four, free cancellation, nothing to pay up front, so hold it today. Then hunt Jalan, Rakuten Travel or direct, where the ryokan actually sell. Airbnb has nothing whole-house in town; its best offer is Cottage-Blue in Gokase, 2 bedrooms and 2 bathrooms for €137, 14 km out.</p>
-      </div>
-      <div class="dl">
-        <div class="dl-top">
-          <span class="dl-what">Takachiho Gorge rental boat — 19 Nov</span>
-          <span class="dl-when">opens 5 Nov · shuts 17 Nov 09:00</span>
-        </div>
-        <p class="dl-note">The window opens exactly two weeks ahead and closes 9:00 AM two days before your slot. Online only — no phone, no time-slot requests, no waitlist. Same-day tickets are sold at the gorge reception in the morning only. Operating hours are decided each morning around 8:00 on water level and weather.</p>
-      </div>
-      <div class="dl">
-        <div class="dl-top">
-          <span class="dl-what">Nabegataki Falls — 14:00 or 15:00 on the 17th</span>
-          <span class="dl-when">refundable until 14 Nov</span>
-        </div>
-        <p class="dl-note">Advance online booking only, in timed slots. ¥300 an adult, 9:00–17:00 with last entry 16:30, capped at 40 minutes to an hour with no re-entry. Book it for arrival day rather than the 18th — that swap is what makes the crater fit.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec">
     <h2>The route, day by day</h2>
     <div class="days">
 
@@ -657,43 +713,7 @@
           turns the 20th into a 50-minute hop.</p></div>
       </article>
 
-      <article class="day dOsk">
-        <div class="daymark"><span class="dnum">20</span><span class="dmon">–24</span></div>
-        <div class="dbody">
-          <p class="dtitle">Osaka</p>
-          <p class="dsleep">Four nights · TBD</p>
-          <ul class="stops">
-            <li><span><b>Nothing planned yet</b><small>Arrive from Kagoshima on the evening of the 20th, out on the 24th.
-            Off this map, and the point where the car stops mattering.</small></span></li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="day dOsk">
-        <div class="daymark"><span class="dnum">24</span><span class="dmon">–28</span></div>
-        <div class="dbody">
-          <p class="dtitle">Kyoto, via Nara</p>
-          <p class="dsleep">Four nights · TBD</p>
-          <ul class="stops">
-            <li><span><b>Nara on the way</b><small>It sits between the two, so the 24th can be a day out rather than a
-            transfer — Todai-ji and the deer park, then on to Kyoto in the evening.</small></span></li>
-            <li><span><b>Peak maple season</b><small>Late November is the busiest week of the Kyoto year. Of the three
-            city legs, this is the one where beds and temple slots need booking early.</small></span></li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="day dOsk">
-        <div class="daymark"><span class="dnum">28</span><span class="dmon">–4 DEC</span></div>
-        <div class="dbody">
-          <p class="dtitle">Tokyo, then home</p>
-          <p class="dsleep">Six nights · TBD</p>
-          <ul class="stops">
-            <li><span><b>The long stay</b><small>Six nights, so which district you sleep in matters more than which
-            hotel. Fly out on the 4th.</small></span></li>
-          </ul>
-        </div>
-      </article>
+      
 
     </div>
   </section>
@@ -765,28 +785,86 @@
     </div>
   </section>
 
+  
+  </div>
+
+  <div class="panel" id="p-osaka" role="tabpanel" aria-labelledby="t-osaka" hidden>
   <section class="sec">
-    <h2>Still open</h2>
-    <div class="qs">
-      <div class="q">
-        <h3>Where the car goes back — being decided</h3>
-        <p>City means Sakurajima fills the 20th. Airport means seven hours in a departure hall, and that morning would
-        be better spent driving to Kirishima instead. Day 20 above assumes the city; if it turns out to be the airport,
-        that day needs re-cutting.</p>
-      </div>
-      <div class="q">
-        <h3>Two nights still unbooked</h3>
-        <p>Takachiho on the 18th needs a phone call — nothing en-suite is bookable online in the town itself except
-        Guest House Iwato, and that is one room for four. Miyazaki on the 19th is a click away whenever you want it.</p>
-      </div>
-      <div class="q">
-        <h3>2026 Kumamoto Earthquake advisory</h3>
-        <p>The Takachiho tourism board carries an advisory dated 14 August. It reports no damage in Takachiho itself — it asks anyone travelling to Kumamoto Prefecture to confirm that accommodation and attractions are operating, via the Japan Tourism Agency and <a href="https://www.japan.travel/en/">JNTO</a> status pages. Kurokawa and Aso are inside that prefecture. Every leg here routed normally, which suggests the main roads are open, but that is not confirmation. Verify before anything becomes non-refundable.</p>
-      </div>
+    <h2>Leg 2 &middot; Osaka</h2>
+    <p>20&ndash;24 November &middot; four nights. Not planned yet.</p>
+    <div class="days">
+<article class="day dOsk">
+        <div class="daymark"><span class="dnum">20</span><span class="dmon">–24</span></div>
+        <div class="dbody">
+          <p class="dtitle">Osaka</p>
+          <p class="dsleep">Four nights · TBD</p>
+          <ul class="stops">
+            <li><span><b>Nothing planned yet</b><small>Arrive from Kagoshima on the evening of the 20th, out on the 24th.
+            Off this map, and the point where the car stops mattering.</small></span></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+    <div class="tbdbox">
+      <p class="tbd-t">What this leg needs</p>
+      <p class="tbd-n">Beds for four in two en-suite rooms, a district to base in, and a plan for the days. No car from here on, so this becomes a trains-and-walking leg. Availability is not the constraint in a city this size.</p>
     </div>
   </section>
 
-  <footer class="foot">
+  </div>
+
+  <div class="panel" id="p-kyoto" role="tabpanel" aria-labelledby="t-kyoto" hidden>
+  <section class="sec">
+    <h2>Leg 3 &middot; Kyoto, via Nara</h2>
+    <p>24&ndash;28 November &middot; four nights. Not planned yet.</p>
+    <div class="days">
+<article class="day dOsk">
+        <div class="daymark"><span class="dnum">24</span><span class="dmon">–28</span></div>
+        <div class="dbody">
+          <p class="dtitle">Kyoto, via Nara</p>
+          <p class="dsleep">Four nights · TBD</p>
+          <ul class="stops">
+            <li><span><b>Nara on the way</b><small>It sits between the two, so the 24th can be a day out rather than a
+            transfer — Todai-ji and the deer park, then on to Kyoto in the evening.</small></span></li>
+            <li><span><b>Peak maple season</b><small>Late November is the busiest week of the Kyoto year. Of the three
+            city legs, this is the one where beds and temple slots need booking early.</small></span></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+    <div class="tbdbox">
+      <p class="tbd-t">What this leg needs</p>
+      <p class="tbd-n">A regional map of the Osaka&ndash;Nara&ndash;Kyoto triangle, the Nara day on the 24th, and beds. This is the tight leg: late November is peak maple season, the busiest week of the Kyoto year, so beds and the popular temples want booking well ahead.</p>
+    </div>
+  </section>
+
+  </div>
+
+  <div class="panel" id="p-tokyo" role="tabpanel" aria-labelledby="t-tokyo" hidden>
+  <section class="sec">
+    <h2>Leg 4 &middot; Tokyo</h2>
+    <p>28 November &ndash; 4 December &middot; six nights. Not planned yet.</p>
+    <div class="days">
+<article class="day dOsk">
+        <div class="daymark"><span class="dnum">28</span><span class="dmon">–4 DEC</span></div>
+        <div class="dbody">
+          <p class="dtitle">Tokyo, then home</p>
+          <p class="dsleep">Six nights · TBD</p>
+          <ul class="stops">
+            <li><span><b>The long stay</b><small>Six nights, so which district you sleep in matters more than which
+            hotel. Fly out on the 4th.</small></span></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+    <div class="tbdbox">
+      <p class="tbd-t">What this leg needs</p>
+      <p class="tbd-n">A district map rather than a coastline &mdash; at city scale the useful drawing is neighbourhoods and stations. Six nights means where you sleep matters more than which hotel, and the 4th is the flight home.</p>
+    </div>
+  </section>
+
+  </div>
+<footer class="foot">
     Photographs from Wikimedia Commons, reused under their stated licences and cropped to fit: @@CREDITS@@.<br>
     Coastline and prefecture outlines from open geographic data, equirectangular projection, simplified · Drive times from Google Maps, typical traffic · Crater hours from the Aso Volcano Disaster Prevention Council · Boat rules from the Takachiho Town Tourism Association · Falls rules from the ASO Oguni Tourism Association · Marker positions accurate to a few hundred metres<br>
     <a href="https://www.booking.com/hotel/jp/deepspot-vacation-stay-19274v.html">DeepSpot</a> ·
@@ -915,6 +993,36 @@
     });
   }
   bind('.mk');
+
+  // ---- leg tabs ----
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  function selectTab(id, push){
+    tabs.forEach(function(tb){
+      var on = tb.getAttribute('data-p') === id;
+      tb.setAttribute('aria-selected', String(on));
+      var pane = document.getElementById('p-' + tb.getAttribute('data-p'));
+      if(pane){ if(on){ pane.removeAttribute('hidden'); } else { pane.setAttribute('hidden',''); } }
+    });
+    hideTip();
+    if(push && location.hash.slice(1) !== id){ history.replaceState(null,'','#'+id); }
+  }
+  tabs.forEach(function(tb, i){
+    tb.addEventListener('click', function(){ selectTab(tb.getAttribute('data-p'), true); });
+    tb.addEventListener('keydown', function(e){
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if(!d) return;
+      e.preventDefault();
+      var n = tabs[(i + d + tabs.length) % tabs.length];
+      n.focus(); selectTab(n.getAttribute('data-p'), true);
+    });
+  });
+  // deep link: /#kyoto opens that leg
+  var want = location.hash.slice(1);
+  if(want && document.getElementById('p-' + want)) selectTab(want, false);
+  window.addEventListener('hashchange', function(){
+    var h = location.hash.slice(1);
+    if(h && document.getElementById('p-' + h)) selectTab(h, false);
+  });
 
   // tapping empty map, scrolling, or Escape dismisses the card
   tip.addEventListener('mouseenter', cancelHide);
