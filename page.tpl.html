@@ -1,0 +1,638 @@
+<title>Kyushu Ground Route</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+
+<style>
+  :root {
+    --ground:#EDF0EC; --surface:#F7F9F6; --ink:#171A18; --stone:#656E67; --hair:#D3DAD2;
+    --jade:#2C6455; --jade-sf:#DDE8E3; --verm:#A93724; --verm-sf:#F4E2DE; --amber:#8A5F13;
+    --sea:#CFDFDD; --land:#F6F5F1; --coast:#AFC7C3;
+    --d17:#12564A; --d18:#5C8438; --d19:#A98216; --d20:#A6431B;
+    --lb-bg:rgba(247,249,246,.93);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#131614; --surface:#1C201D; --ink:#E6EAE5; --stone:#97A099; --hair:#2E342F;
+      --jade:#7CBBA8; --jade-sf:#1B2A26; --verm:#E5836C; --verm-sf:#2E1D19; --amber:#C79A45;
+      --sea:#0C1514; --land:#252C29; --coast:#3B4643;
+      --d17:#5FC9B0; --d18:#A8D264; --d19:#E6C455; --d20:#F08D4C;
+      --lb-bg:rgba(28,32,29,.93);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#131614; --surface:#1C201D; --ink:#E6EAE5; --stone:#97A099; --hair:#2E342F;
+    --jade:#7CBBA8; --jade-sf:#1B2A26; --verm:#E5836C; --verm-sf:#2E1D19; --amber:#C79A45;
+    --sea:#0C1514; --land:#252C29; --coast:#3B4643;
+    --d17:#5FC9B0; --d18:#A8D264; --d19:#E6C455; --d20:#F08D4C;
+    --lb-bg:rgba(28,32,29,.93);
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--ground); color:var(--ink);
+    font-family:"Archivo",ui-sans-serif,system-ui,sans-serif;
+    font-size:16px; line-height:1.6; margin:0; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:46rem; margin:0 auto; padding:3rem 1.25rem 5rem; display:flex; flex-direction:column; gap:3rem; }
+
+  .mast { display:flex; flex-direction:column; gap:.9rem; }
+  .eyebrow { font-family:"JetBrains Mono",ui-monospace,monospace; font-size:.7rem; letter-spacing:.14em;
+             text-transform:uppercase; color:var(--jade); margin:0; }
+  h1 { font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:clamp(2.6rem,11vw,4.1rem);
+       line-height:.98; letter-spacing:-.015em; text-wrap:balance; margin:0; }
+  h1 em { font-style:italic; color:var(--jade); }
+  .standfirst { font-size:1.06rem; color:var(--stone); max-width:34em; margin:0; }
+
+  .sec { display:flex; flex-direction:column; gap:1.1rem; }
+  h2 { font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:1.85rem;
+       line-height:1.15; margin:0; text-wrap:balance; }
+  .sec > p { margin:0; color:var(--stone); max-width:36em; }
+
+  /* ===================== MAP ===================== */
+  .mapsec { display:flex; flex-direction:column; gap:.9rem; }
+  .chips { display:flex; flex-wrap:wrap; gap:.35rem; }
+  .chip {
+    font-family:"JetBrains Mono",ui-monospace,monospace; font-size:.72rem; letter-spacing:.04em;
+    padding:.4rem .62rem; border:1px solid var(--hair); background:var(--surface); color:var(--stone);
+    border-radius:2px; cursor:pointer; line-height:1;
+  }
+  .chip:hover { color:var(--ink); border-color:var(--stone); }
+  .chip[aria-pressed="true"] { background:var(--ink); color:var(--ground); border-color:var(--ink); }
+  .chip:focus-visible { outline:2px solid var(--jade); outline-offset:2px; }
+
+  .mapwrap { position:relative; border:1px solid var(--hair); border-radius:2px; overflow:hidden; background:var(--sea); }
+  svg.map { display:block; width:100%; height:auto; }
+  .sea { fill:var(--sea); }
+  .land path { fill:var(--land); stroke:var(--coast); stroke-width:1.1; vector-effect:non-scaling-stroke; }
+
+  .rt { fill:none; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round;
+        vector-effect:non-scaling-stroke; transition:opacity .18s, stroke-width .18s; }
+  .rt17 { stroke:var(--d17); } .rt18 { stroke:var(--d18); }
+  .rt19 { stroke:var(--d19); } .rt20 { stroke:var(--d20); stroke-dasharray:1 6; }
+  .fly { fill:none; stroke:var(--verm); stroke-width:2; stroke-dasharray:7 6;
+         stroke-linecap:round; vector-effect:non-scaling-stroke; opacity:.85; }
+  .flyhead { fill:var(--verm); stroke:none; opacity:.9; }
+
+  .mk { cursor:pointer; }
+  .mk .hit { fill:transparent; }
+  .mk .halo { fill:var(--ground); opacity:.5; }
+  .mk .dot { stroke:var(--ground); stroke-width:2.4; vector-effect:non-scaling-stroke; transition:r .16s; }
+  .mk[data-day="17"] .dot { fill:var(--d17); } .mk[data-day="18"] .dot { fill:var(--d18); }
+  .mk[data-day="19"] .dot { fill:var(--d19); } .mk[data-day="20"] .dot { fill:var(--d20); }
+  .mk-air .dot { stroke:var(--verm); stroke-width:3.4; }
+  .mk-opt .dot { fill:var(--surface); stroke:var(--amber); stroke-width:2.6; }
+  /* overnight stops: a donut, so "we sleep here" reads at any size */
+  .mk .ring { stroke:var(--ground); stroke-width:2.2; vector-effect:non-scaling-stroke; transition:r .16s; }
+  .mk .core { fill:var(--ground); pointer-events:none; }
+  .mk[data-day="17"] .ring { fill:var(--d17); }
+  .mk[data-day="18"] .ring { fill:var(--d18); }
+  .mk[data-day="19"] .ring { fill:var(--d19); }
+  .mk[data-day="20"] .ring { fill:var(--d20); }
+  .mk:hover .dot, .mk:focus .dot { r:12; }
+  .mk:hover .ring, .mk:focus .ring { r:17; }
+  .mk:focus { outline:none; }
+  .mk.sel .dot { r:13; }
+  .mk.sel .ring { r:18; }
+
+  .lb {
+    position:absolute; font-family:"Archivo",sans-serif; font-size:.72rem; font-weight:600;
+    line-height:1.25; white-space:nowrap; pointer-events:auto; cursor:pointer;
+    background:var(--lb-bg); color:var(--ink); padding:.14rem .32rem; border-radius:2px;
+    border:1px solid var(--hair); transition:opacity .18s;
+  }
+  .lb-opt { font-weight:400; color:var(--stone); font-size:.68rem; }
+  .lb-fly { color:var(--verm); background:transparent; border-color:transparent; font-weight:600;
+            font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.1em;
+            text-transform:uppercase; padding:0; }
+  .lb-bed { color:var(--ground); border-color:transparent; letter-spacing:.01em; }
+  .lb-bed[data-day="17"] { background:var(--d17); }
+  .lb-bed[data-day="18"] { background:var(--d18); }
+  .lb-bed[data-day="19"] { background:var(--d19); }
+  .lb-r { transform:translate(13px,-50%); }
+  .lb-l { transform:translate(calc(-100% - 13px),-50%); }
+  .lb-t { transform:translate(-50%,calc(-100% - 12px)); }
+  .lb-b { transform:translate(-50%,12px); }
+
+  /* hover / focus card */
+  .tip {
+    position:absolute; z-index:6; width:16.5rem; max-width:calc(100% - 1.2rem);
+    background:var(--surface); border:1px solid var(--hair); border-left:3px solid var(--jade);
+    border-radius:3px; padding:.6rem .7rem; box-shadow:0 6px 22px rgba(0,0,0,.22);
+    opacity:0; visibility:hidden; transform:translateY(3px); transition:opacity .13s, transform .13s;
+    pointer-events:none; display:flex; flex-direction:column; gap:.2rem;
+  }
+  .tip.on { opacity:1; visibility:visible; transform:translateY(0); }
+  .tip[data-day="17"] { border-left-color:var(--d17); }
+  .tip[data-day="18"] { border-left-color:var(--d18); }
+  .tip[data-day="19"] { border-left-color:var(--d19); }
+  .tip[data-day="20"] { border-left-color:var(--d20); }
+  .tip[data-day="0"]  { border-left-color:var(--amber); }
+  .tip-k { font-family:"JetBrains Mono",monospace; font-size:.58rem; letter-spacing:.13em;
+           text-transform:uppercase; color:var(--stone); display:flex; gap:.4rem; flex-wrap:wrap; }
+  .tip-k b { color:var(--ink); font-weight:600; }
+  .tip-t { font-weight:600; font-size:.95rem; line-height:1.25; }
+  .tip-n { font-size:.8rem; color:var(--stone); line-height:1.45; }
+  .tip-l { font-family:"JetBrains Mono",monospace; font-size:.66rem; color:var(--stone);
+           border-top:1px solid var(--hair); padding-top:.35rem; margin-top:.12rem;
+           font-variant-numeric:tabular-nums; }
+  .tip-s { font-family:"JetBrains Mono",monospace; font-size:.63rem; letter-spacing:.03em;
+           padding:.16rem .4rem; border-radius:2px; align-self:flex-start; margin-top:.1rem; }
+  .tip-s.ok   { color:var(--jade); background:var(--jade-sf); }
+  .tip-s.warn { color:var(--verm); background:var(--verm-sf); }
+  .tip-s.open { color:var(--stone); background:var(--ground); border:1px solid var(--hair); }
+
+  .scale line { stroke:var(--ink); stroke-width:1.4; vector-effect:non-scaling-stroke; opacity:.55; }
+  .scalelb, .northlb {
+    position:absolute; font-family:"JetBrains Mono",monospace; font-size:.62rem;
+    letter-spacing:.08em; color:var(--ink); opacity:.6;
+  }
+  .scalelb { left:4.9%; top:94.4%; }
+  .northlb { right:3.5%; top:2.2%; font-weight:600; }
+
+  /* filter states */
+  .mapwrap[data-f="opt"] .rt { opacity:.16; }
+  .mapwrap[data-f="opt"] .mk-air, .mapwrap[data-f="opt"] .mk-bed, .mapwrap[data-f="opt"] .mk-stop { opacity:.3; }
+  .mapwrap[data-f="opt"] .lb-rt { opacity:0; pointer-events:none; }
+  .mapwrap .lb-fly { opacity:.9 !important; pointer-events:none; }
+  .mapwrap:not([data-f="opt"]) .lb-opt { opacity:0; pointer-events:none; }
+  .mapwrap[data-f="all"] .lb-opt { opacity:0; }
+  .mapwrap[data-f="17"] .rt:not(.rt17), .mapwrap[data-f="18"] .rt:not(.rt18),
+  .mapwrap[data-f="19"] .rt:not(.rt19), .mapwrap[data-f="20"] .rt:not(.rt20) { opacity:.14; }
+  .mapwrap[data-f="17"] .rt17, .mapwrap[data-f="18"] .rt18,
+  .mapwrap[data-f="19"] .rt19, .mapwrap[data-f="20"] .rt20 { stroke-width:5; }
+  .mapwrap[data-f="17"] .mk:not([data-day="17"]), .mapwrap[data-f="18"] .mk:not([data-day="18"]),
+  .mapwrap[data-f="19"] .mk:not([data-day="19"]), .mapwrap[data-f="20"] .mk:not([data-day="20"]) { opacity:.24; }
+  .mapwrap[data-f="17"] .lb:not([data-day="17"]), .mapwrap[data-f="18"] .lb:not([data-day="18"]),
+  .mapwrap[data-f="19"] .lb:not([data-day="19"]), .mapwrap[data-f="20"] .lb:not([data-day="20"]) { opacity:0; pointer-events:none; }
+
+  /* readout */
+  .readout {
+    border:1px solid var(--hair); border-left:3px solid var(--jade); background:var(--surface);
+    border-radius:2px; padding:.8rem .95rem; display:flex; flex-direction:column; gap:.25rem; min-height:4.6rem;
+  }
+  .readout .rk { font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.12em;
+                 text-transform:uppercase; color:var(--jade); }
+  .readout .rt2 { font-weight:600; font-size:1rem; }
+  .readout .rn { font-size:.89rem; color:var(--stone); }
+
+  .legend { display:flex; flex-wrap:wrap; gap:.5rem 1rem; font-family:"JetBrains Mono",monospace;
+            font-size:.66rem; letter-spacing:.04em; color:var(--stone); }
+  .legend span { display:flex; align-items:center; gap:.35rem; }
+  .legend i { width:16px; height:0; border-top-width:3px; border-top-style:solid; display:block; }
+  .legend i.dotm { width:9px; height:9px; border:2px solid var(--amber); background:var(--surface);
+                   border-radius:50%; border-top-style:solid; }
+  .legend i.donut { width:12px; height:12px; border:3.5px solid var(--ink); background:var(--ground);
+                    border-radius:50%; border-top-style:solid; }
+
+  /* ===================== rest ===================== */
+  .deadlines { display:flex; flex-direction:column; gap:.65rem; }
+  .dl { background:var(--surface); border:1px solid var(--hair); border-left:3px solid var(--verm);
+        border-radius:2px; padding:.85rem 1rem; display:flex; flex-direction:column; gap:.3rem; }
+  .dl-top { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; flex-wrap:wrap; }
+  .dl-what { font-weight:600; font-size:.97rem; }
+  .dl-when { font-family:"JetBrains Mono",monospace; font-size:.74rem; font-weight:600; letter-spacing:.03em;
+             color:var(--verm); background:var(--verm-sf); padding:.15rem .45rem; border-radius:2px;
+             white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .dl-note { font-size:.88rem; color:var(--stone); margin:0; }
+
+  .days { display:flex; flex-direction:column; }
+  .day { display:grid; grid-template-columns:4.1rem 1fr; gap:0 1.1rem; padding-bottom:2.2rem; }
+  .daymark { position:relative; }
+  .daymark::after { content:""; position:absolute; left:calc(100% + .55rem); top:.55rem; bottom:-2.2rem;
+                    width:1px; background:var(--hair); }
+  .day:last-child .daymark::after { display:none; }
+  .dnum { font-family:"Instrument Serif",Georgia,serif; font-size:2.5rem; line-height:.85; display:block;
+          font-variant-numeric:tabular-nums; }
+  .d17 .dnum{color:var(--d17)} .d18 .dnum{color:var(--d18)} .d19 .dnum{color:var(--d19)} .d20 .dnum{color:var(--d20)}
+  .dmon { font-family:"JetBrains Mono",monospace; font-size:.66rem; letter-spacing:.12em; text-transform:uppercase;
+          color:var(--stone); display:block; margin-top:.25rem; }
+  .dbody { display:flex; flex-direction:column; gap:.75rem; min-width:0; }
+  .dtitle { font-size:1.12rem; font-weight:600; margin:0; line-height:1.3; }
+  .dsleep { font-family:"JetBrains Mono",monospace; font-size:.7rem; letter-spacing:.06em;
+            text-transform:uppercase; color:var(--jade); margin:0; }
+  .stops { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.55rem; }
+  .stops li { display:flex; gap:.6rem; align-items:flex-start; font-size:.95rem; }
+  .stops li::before { content:""; flex:none; width:5px; height:5px; border-radius:50%;
+                      background:var(--jade); margin-top:.62em; }
+  .stops small { display:block; color:var(--stone); font-size:.85rem; line-height:1.5; }
+  .leg { display:flex; align-items:baseline; gap:.6rem; font-family:"JetBrains Mono",monospace;
+         font-size:.76rem; color:var(--stone); background:var(--jade-sf); border-radius:2px;
+         padding:.4rem .6rem; font-variant-numeric:tabular-nums; }
+  .leg b { color:var(--jade); font-weight:600; }
+  .flag { font-size:.89rem; border-left:2px solid var(--amber); padding:.15rem 0 .15rem .7rem;
+          color:var(--stone); margin:0; }
+  .flag b { color:var(--ink); font-weight:600; }
+
+  .scroll { overflow-x:auto; border:1px solid var(--hair); border-radius:2px; background:var(--surface); }
+  table { border-collapse:collapse; width:100%; font-size:.9rem; min-width:27rem; }
+  th,td { text-align:left; padding:.6rem .85rem; border-bottom:1px solid var(--hair); }
+  th { font-family:"JetBrains Mono",monospace; font-size:.67rem; letter-spacing:.1em; text-transform:uppercase;
+       color:var(--stone); font-weight:400; }
+  tr:last-child td { border-bottom:none; }
+  td.num { font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap; font-weight:600; }
+  td.km { font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums; color:var(--stone); white-space:nowrap; }
+  tr.tot td { background:var(--jade-sf); } tr.tot td.num { color:var(--jade); }
+
+  .addons { display:flex; flex-direction:column; gap:1.3rem; }
+  .slot { display:flex; flex-direction:column; gap:.55rem; }
+  .slot h3 { font-size:.95rem; margin:0; font-weight:600; }
+  .slot h3 span { font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.1em;
+                  text-transform:uppercase; color:var(--amber); display:block; margin-bottom:.2rem; font-weight:400; }
+  .slot ul { margin:0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.35rem; font-size:.92rem; }
+  .slot li b { font-weight:600; }
+  .slot li small { color:var(--stone); }
+
+  .nights { display:flex; flex-direction:column; gap:.6rem; }
+  .nt { display:grid; grid-template-columns:1fr auto; gap:.15rem .8rem; background:var(--surface);
+        border:1px solid var(--hair); border-left:4px solid var(--jade); border-radius:2px; padding:.75rem .95rem; }
+  .nt.n17 { border-left-color:var(--d17); } .nt.n18 { border-left-color:var(--d18); }
+  .nt.n19 { border-left-color:var(--d19); }
+  .nt-d { font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.11em; text-transform:uppercase;
+          color:var(--stone); grid-column:1; }
+  .nt-p { font-weight:600; font-size:1rem; grid-column:1; }
+  .nt-s { grid-column:2; grid-row:1 / span 2; align-self:center; font-family:"JetBrains Mono",monospace;
+          font-size:.66rem; letter-spacing:.04em; padding:.2rem .5rem; border-radius:2px; white-space:nowrap; }
+  .nt-s.ok   { color:var(--jade); background:var(--jade-sf); }
+  .nt-s.warn { color:var(--verm); background:var(--verm-sf); }
+  .nt-s.open { color:var(--stone); background:var(--ground); border:1px solid var(--hair); }
+  .nt-n { grid-column:1 / -1; font-size:.88rem; color:var(--stone); margin-top:.25rem; }
+
+  .qs { display:flex; flex-direction:column; gap:.9rem; }
+  .q { border:1px dashed var(--hair); border-radius:2px; padding:.85rem 1rem; background:var(--surface); }
+  .q h3 { font-size:.97rem; font-weight:600; margin:0 0 .3rem; line-height:1.35; }
+  .q p { margin:0; font-size:.89rem; color:var(--stone); }
+
+  a { color:var(--jade); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px; }
+  a:hover { text-decoration-thickness:2px; }
+  a:focus-visible { outline:2px solid var(--jade); outline-offset:2px; }
+  .foot { font-family:"JetBrains Mono",monospace; font-size:.7rem; line-height:1.85; color:var(--stone);
+          border-top:1px solid var(--hair); padding-top:1.1rem; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+  @media (max-width:520px) {
+    .lb-rt { font-size:.63rem; }
+    .lb-opt { font-size:.6rem; }
+    .day { grid-template-columns:2.9rem 1fr; gap:0 .8rem; }
+    .dnum { font-size:1.9rem; }
+    .daymark::after { left:calc(100% + .4rem); }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow">17–20 November 2026 · 4 travellers · in from Tokyo, out to Osaka</p>
+    <h1>Kyushu, <em>north to south</em></h1>
+    <p class="standfirst">Land at nine on the 17th, fly out of Kagoshima on the 20th. Everything in between is driving. Tap any point on the map.</p>
+  </header>
+
+  <section class="mapsec">
+    <div class="chips" role="group" aria-label="Filter the map">
+      <button class="chip" data-f="all" aria-pressed="true">THE WHOLE ROUTE</button>
+      <button class="chip" data-f="17" aria-pressed="false">17 NOV</button>
+      <button class="chip" data-f="18" aria-pressed="false">18 NOV</button>
+      <button class="chip" data-f="19" aria-pressed="false">19 NOV</button>
+      <button class="chip" data-f="20" aria-pressed="false">20 NOV</button>
+      <button class="chip" data-f="opt" aria-pressed="false">+ COULD ADD</button>
+    </div>
+
+    <div class="mapwrap" id="mapwrap" data-f="all">
+@@MAP@@
+@@LABELS@@
+      <div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
+      <span class="scalelb">50 km</span>
+      <span class="northlb">N &uarr;</span>
+    </div>
+
+    <div class="legend">
+      <span><i style="border-top-color:var(--d17)"></i> 17 Nov</span>
+      <span><i style="border-top-color:var(--d18)"></i> 18 Nov</span>
+      <span><i style="border-top-color:var(--d19)"></i> 19 Nov</span>
+      <span><i style="border-top-color:var(--d20)"></i> 20 Nov</span>
+      <span><i class="donut"></i> where you sleep</span>
+      <span><i class="dotm"></i> could add</span>
+      <span><i style="border-top-color:var(--verm);border-top-style:dashed"></i> flights</span>
+    </div>
+
+    <div class="readout" id="readout" aria-live="polite">
+      <span class="rk">The map</span>
+      <span class="rt2">Real coastline, real positions</span>
+      <span class="rn">Prefecture outlines from open geographic data, projected to scale — not a sketch. Tap any marker for what happens there. Distances are measured driving times, not straight lines.</span>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Three nights, three states</h2>
+    <p>The filled markers on the map are the beds. Only one of them is actually settled.</p>
+    <div class="nights">
+      <div class="nt n17">
+        <span class="nt-d">Night 1 &middot; 17 Nov</span>
+        <span class="nt-p">Kurokawa Onsen &mdash; DeepSpot</span>
+        <span class="nt-s ok">Booked</span>
+        <span class="nt-n">3 bedrooms, private sauna, 10 min drive from the village. &euro;222 for four.</span>
+      </div>
+      <div class="nt n18">
+        <span class="nt-d">Night 2 &middot; 18 Nov</span>
+        <span class="nt-p">Takachiho</span>
+        <span class="nt-s warn">One bed left in town</span>
+        <span class="nt-n">Hold Guest House Iwato today &mdash; &euro;75, free cancellation, nothing up front &mdash; then hunt Jalan and Rakuten for two proper rooms.</span>
+      </div>
+      <div class="nt n19">
+        <span class="nt-d">Night 3 &middot; 19 Nov</span>
+        <span class="nt-p">Miyazaki</span>
+        <span class="nt-s open">Not searched yet</span>
+        <span class="nt-n">A city, so this one should be easy. Wants two rooms or a two-bedroom place.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Book these before you fly</h2>
+    <p>All online-only, all sell out. Two have cut-offs that fall before you land, and one has already mostly gone.</p>
+    <div class="deadlines">
+      <div class="dl">
+        <div class="dl-top">
+          <span class="dl-what">A bed in Takachiho — 18 Nov</span>
+          <span class="dl-when">almost gone</span>
+        </div>
+        <p class="dl-note">Booking shows <b>one</b> property left in Takachiho for your night. A control search on a normal midweek date shows six, so this is peak-foliage scarcity, not thin coverage. Guest House Iwato is the last one — €75 for four, free cancellation, nothing to pay up front, so hold it today. Then hunt Jalan, Rakuten Travel or direct, where the ryokan actually sell. Airbnb has nothing whole-house in town; its best offer is Cottage-Blue in Gokase, 2 bedrooms and 2 bathrooms for €137, 14 km out.</p>
+      </div>
+      <div class="dl">
+        <div class="dl-top">
+          <span class="dl-what">Takachiho Gorge rental boat — 19 Nov</span>
+          <span class="dl-when">opens 5 Nov · shuts 17 Nov 09:00</span>
+        </div>
+        <p class="dl-note">The window opens exactly two weeks ahead and closes 9:00 AM two days before your slot. Online only — no phone, no time-slot requests, no waitlist. Same-day tickets are sold at the gorge reception in the morning only. Operating hours are decided each morning around 8:00 on water level and weather.</p>
+      </div>
+      <div class="dl">
+        <div class="dl-top">
+          <span class="dl-what">Nabegataki Falls — 14:00 or 15:00 on the 17th</span>
+          <span class="dl-when">refundable until 14 Nov</span>
+        </div>
+        <p class="dl-note">Advance online booking only, in timed slots. ¥300 an adult, 9:00–17:00 with last entry 16:30, capped at 40 minutes to an hour with no re-entry. Book it for arrival day rather than the 18th — that swap is what makes the crater fit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>The route, day by day</h2>
+    <div class="days">
+
+      <article class="day d17">
+        <div class="daymark"><span class="dnum">17</span><span class="dmon">Tue</span></div>
+        <div class="dbody">
+          <p class="dtitle">Land at Fukuoka, drive south to the onsen</p>
+          <p class="dsleep">Sleep · DeepSpot — booked</p>
+          <ul class="stops">
+            <li><span><b>09:00 land from Tokyo · 10:00 collect the car</b><small>Fukuoka to Kurokawa is only 1 h 45 m direct, so the afternoon is genuinely yours rather than a transfer.</small></span></li>
+            <li><span><b>Mameda-machi, Hita</b> — lunch<small>A preserved Edo merchant street of white-walled townhouses, sitting directly on the route. An hour is enough.</small></span></li>
+            <li><span><b>Nabegataki Falls</b> — pre-booked slot<small>A wide, low curtain of water you walk behind.</small></span></li>
+            <li><span><b>Kurokawa Onsen village</b> — evening<small>Buy the <i>tegata</i> pass, around ¥1,500 for three baths. The village is at its best after dark in a yukata.</small></span></li>
+          </ul>
+          <div class="leg"><b>1 h 45 m</b> · 114 km <span>Fukuoka Airport → Kurokawa, direct</span></div>
+          <div class="leg"><b>1 h 59 m</b> <span>via Hita and Nabegataki — the stops cost 14 minutes</span></div>
+        </div>
+      </article>
+
+      <article class="day d18">
+        <div class="daymark"><span class="dnum">18</span><span class="dmon">Wed</span></div>
+        <div class="dbody">
+          <p class="dtitle">Over the caldera rim to Takachiho</p>
+          <p class="dsleep">Sleep · Takachiho</p>
+          <ul class="stops">
+            <li><span><b>Daikanbo &amp; the Milk Road</b> — from about 09:40<small>The northern rim of the Aso caldera, looking down the whole crater floor.</small></span></li>
+            <li><span><b>Nakadake crater &amp; Kusasenri</b> — around 11:30<small>November gate hours 8:30–17:00. Access is cancelled on the morning if volcanic gas is high, so check at breakfast before committing the drive.</small></span></li>
+            <li><span><b>Amano-Iwato &amp; Amanoyasugawara</b> — 15:00, in daylight<small>The cave where the sun goddess hid, and a river cave filled with thousands of stacked stone cairns.</small></span></li>
+            <li><span><b>Takachiho Yokagura</b> — 20:00, Takachiho Shrine<small>An Important Intangible Folk Cultural Property, danced nightly, about an hour. The same myth you stood in that afternoon.</small></span></li>
+          </ul>
+          <div class="leg"><b>2 h 27 m</b> · 113 km <span>Kurokawa → Daikanbo → Kusasenri → Takachiho</span></div>
+          <p class="flag"><b>The old conflict is gone.</b> Sunset is about 17:20, and with Nabegataki moved to arrival day the crater and the Amano-Iwato shrines both fit before dark. Leave DeepSpot by 09:00 and this day has slack in it.</p>
+        </div>
+      </article>
+
+      <article class="day d19">
+        <div class="daymark"><span class="dnum">19</span><span class="dmon">Thu</span></div>
+        <div class="dbody">
+          <p class="dtitle">The gorge, then down to the coast</p>
+          <p class="dsleep">Sleep · Miyazaki</p>
+          <ul class="stops">
+            <li><span><b>Takachiho Gorge by boat</b> — at opening<small>You row yourself to the foot of the 17-metre Manai Falls. First slot means the best light and the thinnest crowd.</small></span></li>
+            <li><span><b>Aoshima Shrine</b><small>An island shrine ringed by the Devil's Washboard, a shelf of wave-cut rock ribs exposed at low tide.</small></span></li>
+            <li><span><b>Udo Jingu</b><small>A vermilion shrine built inside a sea cave in the cliff face. The most striking single thing on this coast.</small></span></li>
+            <li><span><b>Nishitachi, Miyazaki</b><small>The nightlife quarter. Chicken nanban was invented in this prefecture — eat it here, with the local beef.</small></span></li>
+          </ul>
+          <div class="leg"><b>1 h 57 m</b> · 134 km <span>Takachiho → Miyazaki, tolls</span></div>
+          <div class="leg"><b>1 h 13 m</b> · 58 km <span>Miyazaki → Aoshima → Udo → Obi, whole coast run</span></div>
+        </div>
+      </article>
+
+      <article class="day d20">
+        <div class="daymark"><span class="dnum">20</span><span class="dmon">Fri</span></div>
+        <div class="dbody">
+          <p class="dtitle">Kagoshima, and on to Osaka</p>
+          <p class="dsleep">Fixed deadline</p>
+          <ul class="stops">
+            <li><span><b>Aoshima on the way out</b>, if you skipped it yesterday<small>Detouring through Aoshima costs only 24 minutes over driving straight to Kagoshima — the cheapest scenery on the whole route.</small></span></li>
+          </ul>
+          <div class="leg"><b>1 h 50 m</b> · 130 km <span>Miyazaki → Kagoshima, direct</span></div>
+          <div class="leg"><b>2 h 14 m</b> · 151 km <span>Miyazaki → Aoshima → Kagoshima</span></div>
+          <p class="flag"><b>This day only works for an afternoon or evening departure.</b> If you leave Kagoshima in the morning, the night of the 19th has to move west — Kirishima is the good answer, with proper onsen and a short final hop.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>If you add more days</h2>
+    <p>Everything on the map's <b>could add</b> layer, grouped by where the extra night actually goes. Nothing here needs the route redrawn.</p>
+    <div class="addons">
+
+      <div class="slot">
+        <h3><span>A night at the front, before Kurokawa</span>The Oita onsen belt</h3>
+        <ul>
+          <li><b>Yufuin</b> — <small>smart, walkable onsen town with a lake and a long craft street. Sits almost exactly on the Fukuoka–Kurokawa line, so it costs you nothing in distance.</small></li>
+          <li><b>Beppu</b> — <small>the big one: steam vents across a whole hillside and eight distinct hot-spring fields. Roughly an hour east of Kurokawa.</small></li>
+        </ul>
+      </div>
+
+      <div class="slot">
+        <h3><span>A night in the middle, around Aso</span>Caldera and castle</h3>
+        <ul>
+          <li><b>Takamori &amp; Minamiaso</b> — <small>the caldera's southern floor, and the moss-covered cave shrine at Kamishikimi Kumano Imasu. This is also where the spare beds are, as the map shows.</small></li>
+          <li><b>Kumamoto Castle</b> — <small>one of Japan's three great castles, about an hour west of Aso. A detour rather than a stop, so it wants its own half-day.</small></li>
+          <li><b>Gokase</b> — <small>not a sight, but 14 km from Takachiho and the closest place with rooms if the town stays full.</small></li>
+        </ul>
+      </div>
+
+      <div class="slot">
+        <h3><span>A night at the end, before Kagoshima</span>Kirishima and the bay</h3>
+        <ul>
+          <li><b>Kirishima Jingu</b> — <small>a shrine in deep cedar forest on the volcano's flank, close to Kagoshima airport. The single best way to spend an extra night here, because it also de-risks a morning departure.</small></li>
+          <li><b>Ebino Highlands</b> — <small>crater lakes on the rim above Kirishima, and genuine autumn colour in November.</small></li>
+          <li><b>Sakurajima</b> — <small>a live volcano directly across the bay from Kagoshima, reached by a ferry that runs through the night.</small></li>
+          <li><b>Sekinoo Falls</b> — <small>basalt columns and giant potholes, sitting right on the Miyazaki–Kagoshima line, so nearly free.</small></li>
+        </ul>
+      </div>
+
+      <div class="slot">
+        <h3><span>Or stretch the coast day</span>Further down Nichinan</h3>
+        <ul>
+          <li><b>Cape Toi</b> — <small>wild horses grazing on an open headland at the southern end of the Nichinan coast, below Obi.</small></li>
+          <li><b>Nobeoka</b> — <small>the coastal gateway, if you would rather reach the sea on the 18th than the 19th.</small></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Every leg, measured</h2>
+    <p>Driving times as routed, not guessed. The alternatives are here so you can rebuild the day in the car if a road or a slot falls through.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th scope="col">Leg</th><th scope="col">Time</th><th scope="col">Distance</th></tr></thead>
+        <tbody>
+          <tr><td>Fukuoka Airport → Kurokawa, direct</td><td class="num">1 h 45 m</td><td class="km">114 km</td></tr>
+          <tr><td>Fukuoka → Hita → Nabegataki → Kurokawa</td><td class="num">1 h 59 m</td><td class="km">—</td></tr>
+          <tr><td>Kurokawa → Daikanbo → Kusasenri → Takachiho</td><td class="num">2 h 27 m</td><td class="km">113 km</td></tr>
+          <tr><td>Kurokawa → Nabegataki → Daikanbo → Aso</td><td class="num">1 h 12 m</td><td class="km">51 km</td></tr>
+          <tr><td>Aso Station → Aso crater</td><td class="num">20 m</td><td class="km">13 km</td></tr>
+          <tr><td>Aso → Takachiho</td><td class="num">1 h 06 m</td><td class="km">55 km</td></tr>
+          <tr><td>Takachiho → Miyazaki</td><td class="num">1 h 57 m</td><td class="km">134 km</td></tr>
+          <tr><td>Miyazaki → Kagoshima</td><td class="num">1 h 50 m</td><td class="km">130 km</td></tr>
+          <tr><td>Miyazaki → Aoshima → Kagoshima</td><td class="num">2 h 14 m</td><td class="km">151 km</td></tr>
+          <tr><td>Miyazaki → Aoshima → Udo → Obi</td><td class="num">1 h 13 m</td><td class="km">58 km</td></tr>
+          <tr><td>Takachiho → Kagoshima <em>(skipping Miyazaki)</em></td><td class="num">3 h 07 m</td><td class="km">232 km</td></tr>
+          <tr class="tot"><td>Whole trip, Fukuoka to Kagoshima</td><td class="num">≈ 9 h 25 m</td><td class="km">4 days</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Still open</h2>
+    <div class="qs">
+      <div class="q">
+        <h3>What time do you leave Kagoshima on the 20th?</h3>
+        <p>The only thing that can still break the plan. An afternoon or evening departure and the 19th ends in Miyazaki as written. A morning departure and the night of the 19th has to move west to Kirishima, which costs you the Nichinan coast.</p>
+      </div>
+      <div class="q">
+        <h3>Two nights still unbooked</h3>
+        <p>Takachiho on the 18th, which is nearly gone, and Miyazaki on the 19th, which is a city and should be easy. Both want a shape that gives the couple their own room.</p>
+      </div>
+      <div class="q">
+        <h3>2026 Kumamoto Earthquake advisory</h3>
+        <p>The Takachiho tourism board carries an advisory dated 14 August. It reports no damage in Takachiho itself — it asks anyone travelling to Kumamoto Prefecture to confirm that accommodation and attractions are operating, via the Japan Tourism Agency and <a href="https://www.japan.travel/en/">JNTO</a> status pages. Kurokawa and Aso are inside that prefecture. Every leg here routed normally, which suggests the main roads are open, but that is not confirmation. Verify before anything becomes non-refundable.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    Coastline and prefecture outlines from open geographic data, equirectangular projection, simplified · Drive times from Google Maps, typical traffic · Crater hours from the Aso Volcano Disaster Prevention Council · Boat rules from the Takachiho Town Tourism Association · Falls rules from the ASO Oguni Tourism Association · Marker positions accurate to a few hundred metres<br>
+    <a href="https://www.booking.com/hotel/jp/deepspot-vacation-stay-19274v.html">DeepSpot</a> ·
+    <a href="https://www.booking.com/hotel/jp/gesutohausuiwato.html">Guest House Iwato</a> ·
+    <a href="https://www.airbnb.com/rooms/50141542">Cottage-Blue, Gokase</a> ·
+    <a href="https://ogunitown.info/nabegataki/en/">Nabegataki booking</a> ·
+    <a href="https://takachiho-kanko.info/en/">Takachiho tourism</a> ·
+    <a href="https://www.aso-volcano.jp/">Aso crater status</a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var wrap = document.getElementById('mapwrap');
+  var readout = document.getElementById('readout');
+  var places = @@PLACES@@;
+
+  // filter chips
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){
+      chips.forEach(function(o){ o.setAttribute('aria-pressed', String(o === c)); });
+      wrap.setAttribute('data-f', c.getAttribute('data-f'));
+    });
+  });
+
+  var KIND = { air:'Flight', bed:'Overnight', stop:'Stop', opt:'Could add' };
+  function show(i){
+    var p = places[i]; if(!p) return;
+    readout.innerHTML = '';
+    var k = document.createElement('span'); k.className='rk'; k.textContent = KIND[p.kind] || 'Stop';
+    var t = document.createElement('span'); t.className='rt2'; t.textContent = p.label;
+    var n = document.createElement('span'); n.className='rn'; n.textContent = p.note;
+    readout.appendChild(k); readout.appendChild(t); readout.appendChild(n);
+    Array.prototype.forEach.call(wrap.querySelectorAll('.mk.sel'), function(e){ e.classList.remove('sel'); });
+    var mk = wrap.querySelector('.mk[data-i="'+i+'"]'); if(mk) mk.classList.add('sel');
+  }
+  // ---- hover / focus card ----
+  var tip = document.getElementById('tip');
+  var hideTimer = null;
+
+  function tipHTML(p){
+    var h = '<span class="tip-k"><b>' + (KIND[p.kind] || 'Stop') + '</b>' +
+            (p.when ? '<span>' + p.when + '</span>' : '') + '</span>' +
+            '<span class="tip-t">' + p.label + '</span>' +
+            '<span class="tip-n">' + p.note + '</span>';
+    if(p.leg)    h += '<span class="tip-l">&rarr; ' + p.leg + '</span>';
+    if(p.status) h += '<span class="tip-s ' + (p.sclass || 'open') + '">' + p.status + '</span>';
+    return h;
+  }
+
+  function place(i){
+    var p = places[i]; if(!p) return;
+    tip.innerHTML = tipHTML(p);
+    tip.setAttribute('data-day', String(p.day));
+    tip.classList.add('on');
+    tip.setAttribute('aria-hidden', 'false');
+
+    var W = wrap.clientWidth, H = wrap.clientHeight;
+    var cx = p.l / 100 * W, cy = p.t / 100 * H;
+    var tw = tip.offsetWidth, th = tip.offsetHeight;
+    var pad = 8, gap = 18;
+
+    // prefer right of the marker; flip left when it would overflow
+    var left = cx + gap;
+    if(left + tw > W - pad) left = cx - gap - tw;
+    if(left < pad) left = Math.min(pad, Math.max(0, W - tw - pad));
+
+    // vertically centred, clamped inside the map
+    var top = cy - th / 2;
+    if(top + th > H - pad) top = H - th - pad;
+    if(top < pad) top = pad;
+
+    tip.style.left = Math.round(left) + 'px';
+    tip.style.top  = Math.round(top)  + 'px';
+  }
+  function hideTip(){
+    tip.classList.remove('on');
+    tip.setAttribute('aria-hidden', 'true');
+  }
+  function armHide(){ clearTimeout(hideTimer); hideTimer = setTimeout(hideTip, 90); }
+  function cancelHide(){ clearTimeout(hideTimer); }
+
+  function bind(sel){
+    Array.prototype.forEach.call(wrap.querySelectorAll(sel), function(el){
+      var i = parseInt(el.getAttribute('data-i'), 10);
+      if(isNaN(i)) return;
+      el.addEventListener('mouseenter', function(){ cancelHide(); place(i); });
+      el.addEventListener('mouseleave', armHide);
+      el.addEventListener('focus', function(){ cancelHide(); place(i); show(i); });
+      el.addEventListener('blur', armHide);
+      el.addEventListener('click', function(e){ e.stopPropagation(); cancelHide(); show(i); place(i); });
+      el.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); show(i); place(i); }
+      });
+    });
+  }
+  bind('.mk'); bind('.lb');
+
+  // tapping empty map, scrolling, or Escape dismisses the card
+  wrap.addEventListener('click', hideTip);
+  window.addEventListener('scroll', hideTip, { passive:true });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') hideTip(); });
+  chips.forEach(function(c){ c.addEventListener('click', hideTip); });
+})();
+</script>
