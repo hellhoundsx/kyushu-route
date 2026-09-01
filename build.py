@@ -48,8 +48,8 @@ PL=[
    "An intact samurai castle town, the turning point of the coast day.",
    "19 Nov &middot; late afternoon","southern end of the run"),
  p(31.5830,130.5420,20,"air","l","Kagoshima",
-   "Car back at 10:00, flight at 17:00, then four nights in Osaka to the 24th. The six hours in between are enough for Sakurajima.",
-   "20 Nov &middot; 17:00 to Osaka","1 h 50 m from Miyazaki, 2 h 14 m via Aoshima","Osaka 20&ndash;24 Nov","ok"),
+   "Car back at the airport, flight at 17:00, then four nights in Osaka to the 24th. Kirishima Jingu is 19 minutes off the direct run and sits beside the airport.",
+   "20 Nov &middot; 17:00 to Osaka","1 h 34 m from Miyazaki, 1 h 53 m via Kirishima Jingu","Osaka 20&ndash;24 Nov","ok"),
 
  p(33.2790,131.5000,0,"opt","r","Beppu",
    "Steam vents across a whole hillside and eight distinct hot-spring fields. The biggest onsen town in Kyushu.",
@@ -73,8 +73,8 @@ PL=[
    "Basalt columns and giant potholes carved into the rock.",
    "nearly free detour","sits on the Miyazaki&ndash;Kagoshima line"),
  p(31.8580,130.8360,0,"opt","r","Kirishima Jingu",
-   "A shrine in deep cedar forest on the volcano's flank. The single best use of an extra night, because it also de-risks a morning departure.",
-   "if you add a night at the end","close to Kagoshima airport"),
+   "A shrine in deep cedar forest on the volcano's flank, beside Kagoshima airport. The last stop on day 20 rather than an add-on.",
+   "day 20, beside the airport","19 min off the direct run"),
  p(31.9430,130.8590,0,"opt","l","Ebino Highlands",
    "Crater lakes on the rim above Kirishima, with genuine autumn colour in November.",
    "if you add a night at the end","above Kirishima"),
@@ -82,8 +82,8 @@ PL=[
    "Wild horses grazing on an open headland at the southern end of the Nichinan coast.",
    "stretches the coast day","below Obi"),
  p(31.5850,130.6570,0,"opt","r","Sakurajima",
-   "A live volcano directly across the bay from Kagoshima, reached by a ferry that runs through the night.",
-   "if you add a Kagoshima night","ferry from the city"),
+   "A live volcano across the bay, reached by a 15-minute ferry. Needs you to be in the city, which an airport car return means you are not.",
+   "only if you add a Kagoshima night","ferry from the city"),
 ]
 
 places=[]
