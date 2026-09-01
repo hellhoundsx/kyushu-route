@@ -47,7 +47,7 @@ PL=[
  p(31.6220,131.3530,19,"stop","l","Obi, Nichinan",
    "An intact samurai castle town, the turning point of the coast day.",
    "19 Nov &middot; late afternoon","southern end of the run"),
- p(31.5830,130.5420,20,"air","l","Kagoshima",
+ p(31.8034,130.7194,20,"air","b","Kagoshima Airport",
    "Car back at the airport, flight at 17:00, then four nights in Osaka to the 24th. Kirishima Jingu is 19 minutes off the direct run and sits beside the airport.",
    "20 Nov &middot; 17:00 to Osaka","1 h 34 m from Miyazaki, 1 h 53 m via Kirishima Jingu","Osaka 20&ndash;24 Nov","ok"),
 
@@ -69,15 +69,18 @@ PL=[
  p(32.5820,131.6650,0,"opt","r","Nobeoka",
    "The coastal gateway, if you would rather reach the sea on the 18th than the 19th.",
    "alternative shape for day 18","east of Takachiho"),
- p(31.7460,131.0130,0,"opt","r","Sekinoo Falls",
-   "Basalt columns and giant potholes carved into the rock.",
-   "nearly free detour","sits on the Miyazaki&ndash;Kagoshima line"),
- p(31.8580,130.8360,0,"opt","r","Kirishima Jingu",
-   "A shrine in deep cedar forest on the volcano's flank, beside Kagoshima airport. The last stop on day 20 rather than an add-on.",
-   "day 20, beside the airport","19 min off the direct run"),
+ p(31.7460,131.0130,20,"stop","r","Sekinoo Falls",
+   "Potholes among the largest in the world, a National Natural Monument since 1928, plus suspension bridges over the gorge. Free entry and parking. 30 min for the falls, 50 with the potholes, 60 for the full loop.",
+   "20 Nov &middot; mid-morning","4 min on top of the Kirishima detour"),
+ p(31.8580,130.8360,20,"stop","r","Kirishima Jingu",
+   "A shrine in deep cedar forest on the volcano's flank, twenty minutes from the airport.",
+   "20 Nov &middot; late morning","19 min off the direct run"),
+ p(31.8375,130.6736,20,"stop","t","Kareigawa Station",
+   "Opened 1903 and the oldest wooden station building in Kyushu, a National Registered Cultural Property since 2006. Original waiting room and ticket counter. Ten minutes from the airport, so it is the natural last stop.",
+   "20 Nov &middot; early afternoon","4 min on top of the other two"),
  p(31.9430,130.8590,0,"opt","l","Ebino Highlands",
-   "Crater lakes on the rim above Kirishima, with genuine autumn colour in November.",
-   "if you add a night at the end","above Kirishima"),
+   "Crater lakes on the rim above Kirishima, with genuine autumn colour in November. A winding climb, so it wants a couple of hours rather than a look.",
+   "only with a late car return","+58 min on the run to the airport"),
  p(31.3680,131.3350,0,"opt","r","Cape Toi",
    "Wild horses grazing on an open headland at the southern end of the Nichinan coast.",
    "stretches the coast day","below Obi"),
@@ -99,7 +102,7 @@ def line(*ls): return " ".join(f'{byl[l]["x"]},{byl[l]["y"]}' for l in ls)
 ROUTES=[("17",line("Fukuoka Airport","Mameda-machi, Hita","Nabegataki Falls","Kurokawa &middot; DeepSpot")),
         ("18",line("Kurokawa &middot; DeepSpot","Daikanbo","Nakadake &middot; Kusasenri","Amano-Iwato","Takachiho &middot; the gorge")),
         ("19",line("Takachiho &middot; the gorge","Miyazaki","Aoshima Shrine","Udo Jingu","Obi, Nichinan")),
-        ("20",line("Obi, Nichinan","Aoshima Shrine","Miyazaki","Kagoshima"))]
+        ("20",line("Miyazaki","Sekinoo Falls","Kirishima Jingu","Kareigawa Station","Kagoshima Airport"))]
 
 o=[]
 o.append(f'<svg class="map" viewBox="{VB[0]} {VB[1]} {VB[2]} {VB[3]}" role="img" aria-label="Route map of Kyushu from Fukuoka to Kagoshima">')
@@ -109,7 +112,7 @@ for nm,dpath in K["prefs"].items(): o.append(f'<path d="{dpath}"/>')
 o.append('</g>')
 for day,pts in ROUTES:
     o.append(f'<polyline class="rt rt{day}" data-day="{day}" points="{pts}"/>')
-fk=byl["Fukuoka Airport"]; kg=byl["Kagoshima"]
+fk=byl["Fukuoka Airport"]; kg=byl["Kagoshima Airport"]
 
 def head(tip, ctrl, L=17.0, W=6.0):
     """Arrowhead built from the curve's end tangent, so it always points along the line."""
