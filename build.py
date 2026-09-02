@@ -5,13 +5,19 @@ def P(lat,lon): return ((lon-LON0)*KX*SX,(LAT1-lat)*SX)
 VB=(148,110,815,1164)
 def pc(x,y): return ((x-VB[0])/VB[2]*100,(y-VB[1])/VB[3]*100)
 
+SHORT={"Kurokawa &middot; DeepSpot":"Kurokawa",
+       "Aoshima Shrine":"Aoshima",
+       "Takachiho &middot; the gorge":"Takachiho",
+       "Nakadake &middot; Kusasenri":"Nakadake",
+       "Takamori &middot; Minamiaso":"Takamori"}
+
 def p(lat,lon,day,kind,anc,label,note,when,leg="",status="",sclass=""):
     return dict(lat=lat,lon=lon,day=day,kind=kind,anc=anc,label=label,note=note,
                 when=when,leg=leg,status=status,sclass=sclass)
 
 # leg strings only quote MEASURED times; intermediate stops get a positional phrase instead
 PL=[
- p(33.5859,130.4510,17,"air","r","Fukuoka Airport",
+ p(33.5859,130.4510,17,"air","t","Fukuoka Airport",
    "Land at nine, collect the car at ten. Kurokawa is only 1 h 45 m away direct, so the afternoon is yours.",
    "17 Nov &middot; 09:00","arrive from Tokyo"),
  p(33.3213,130.9410,17,"stop","r","Mameda-machi, Hita",
@@ -23,7 +29,7 @@ PL=[
  p(33.0836,131.1206,17,"bed","r","Kurokawa &middot; DeepSpot",
    "Three bedrooms, private sauna, Aso panorama, 10 min drive from the village. &euro;222 for four. Buy the tegata pass for the baths.",
    "Night 1 &middot; 17 Nov","1 h 59 m from Fukuoka via Hita and the falls","Booked","ok"),
- p(32.9830,131.0330,18,"stop","l","Daikanbo",
+ p(32.9830,131.0330,18,"stop","r","Daikanbo",
    "The northern rim of the caldera, looking down the whole crater floor. The Milk Road runs along the ridge from here.",
    "18 Nov &middot; from 09:40","first stop out of Kurokawa"),
  p(32.8846,131.0787,18,"stop","l","Nakadake &middot; Kusasenri",
@@ -44,7 +50,7 @@ PL=[
  p(31.6330,131.4570,19,"stop","r","Udo Jingu",
    "A vermilion shrine built inside a sea cave in the cliff face. The most striking single thing on this coast.",
    "19 Nov &middot; afternoon","on the same coast run"),
- p(31.6220,131.3530,19,"stop","l","Obi, Nichinan",
+ p(31.6220,131.3530,19,"stop","b","Obi, Nichinan",
    "An intact samurai castle town, the turning point of the coast day.",
    "19 Nov &middot; late afternoon","southern end of the run"),
  p(31.8034,130.7194,20,"air","b","Kagoshima Airport",
@@ -57,10 +63,16 @@ PL=[
  p(33.2640,131.3600,0,"opt","l","Yufuin",
    "A smart, walkable onsen town with a lake and a long craft street.",
    "if you add a night at the front","almost exactly on the way in"),
+ p(33.5215,130.5349,17,"alt","r","Dazaifu Tenmangu",
+   "A major shrine 30 min out of Fukuoka, and about thirty shops along its approach grilling umegae mochi to order &mdash; red bean inside, plum-blossom stamped on a hot iron plate.",
+   "17 Nov &middot; the long way","+21 min on the day"),
+ p(33.3167,130.5083,17,"alt","l","Kurume",
+   "Where tonkotsu ramen was invented, at a stall called Nankin Senryo in 1937. The milky white broth came a decade later, by accident, when a cook at Sankyu left the pot on too long.",
+   "17 Nov &middot; the long way","lunch, straight off the expressway"),
  p(32.8030,130.7080,17,"alt","l","Kumamoto Castle",
    "Reopened August 2026 after the earthquake, with new stone-wall damage and reconstruction running to 2052. Sakuranobaba Josaien at its foot is the easiest lunch of the day; Suizenji Jojuen garden is a short hop.",
    "17 Nov &middot; alternative route","+1 h 18 m on the day"),
- p(32.9736,130.9497,17,"alt","r","Kikuchi Gorge",
+ p(33.0029,130.9451,17,"alt","l","Kikuchi Gorge",
    "Four kilometres of clear water and moss under broadleaf forest, and one of Kumamoto's best autumn walks. Closed after the quake, entry ban since lifted.",
    "17 Nov &middot; only with a trade","11 min of driving, an hour of walking"),
  p(32.8220,131.1280,0,"opt","r","Takamori &middot; Minamiaso",
@@ -78,7 +90,7 @@ PL=[
  p(31.8580,130.8360,20,"stop","r","Kirishima Jingu",
    "A shrine in deep cedar forest on the volcano's flank, twenty minutes from the airport.",
    "20 Nov &middot; late morning","19 min off the direct run"),
- p(31.8375,130.6736,20,"stop","t","Kareigawa Station",
+ p(31.8375,130.6736,20,"stop","l","Kareigawa Station",
    "Opened 1903 and the oldest wooden station building in Kyushu, a National Registered Cultural Property since 2006. Original waiting room and ticket counter. Ten minutes from the airport, so it is the natural last stop.",
    "20 Nov &middot; early afternoon","4 min on top of the other two"),
  p(31.9430,130.8590,0,"opt","l","Ebino Highlands",
@@ -102,7 +114,7 @@ for q in PL:
                        gmap=gmap, lat=q["lat"], lon=q["lon"]))
 byl={p_["label"]:p_ for p_ in places}
 def line(*ls): return " ".join(f'{byl[l]["x"]},{byl[l]["y"]}' for l in ls)
-ALT17=line("Fukuoka Airport","Kumamoto Castle","Kikuchi Gorge","Nabegataki Falls","Kurokawa &middot; DeepSpot")
+ALT17=line("Fukuoka Airport","Dazaifu Tenmangu","Kurume","Kumamoto Castle","Kikuchi Gorge","Nabegataki Falls","Kurokawa &middot; DeepSpot")
 ROUTES=[("17",line("Fukuoka Airport","Mameda-machi, Hita","Nabegataki Falls","Kurokawa &middot; DeepSpot")),
         ("18",line("Kurokawa &middot; DeepSpot","Daikanbo","Nakadake &middot; Kusasenri","Amano-Iwato","Takachiho &middot; the gorge")),
         ("19",line("Takachiho &middot; the gorge","Miyazaki","Aoshima Shrine","Udo Jingu","Obi, Nichinan")),
@@ -166,7 +178,7 @@ for i,q in enumerate(places):
     extra=("lb-opt" if q["kind"]=="opt" else "lb-rt lb-alt" if q["kind"]=="alt"
            else "lb-rt lb-bed" if q["kind"]=="bed" else "lb-rt")
     lab.append(f'<span class="lb lb-{q["anc"]} {extra}" data-day="{q["day"]}" data-i="{i}" '
-               f'style="left:{q["l"]}%;top:{q["t"]}%">{q["label"]}</span>')
+               f'style="left:{q["l"]}%;top:{q["t"]}%">{SHORT.get(q["label"], q["label"])}</span>')
 L1,T1=pc(fk["x"]+228,fk["y"]-61); L2,T2=pc(kg["x"]+124,kg["y"]-92)
 lab.append(f'<span class="lb lb-fly lb-r" style="left:{L1:.3f}%;top:{T1:.3f}%">from Tokyo</span>')
 lab.append(f'<span class="lb lb-fly lb-l" style="left:{L2:.3f}%;top:{T2:.3f}%">to Osaka</span>')
