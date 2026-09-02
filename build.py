@@ -57,9 +57,12 @@ PL=[
  p(33.2640,131.3600,0,"opt","l","Yufuin",
    "A smart, walkable onsen town with a lake and a long craft street.",
    "if you add a night at the front","almost exactly on the way in"),
- p(32.8030,130.7080,0,"opt","l","Kumamoto Castle",
-   "One of Japan's three great castles. A detour rather than a stop, so it wants its own half-day.",
-   "if you add a night in the middle","about 1 h west of Aso"),
+ p(32.8030,130.7080,17,"alt","l","Kumamoto Castle",
+   "Reopened August 2026 after the earthquake, with new stone-wall damage and reconstruction running to 2052. Sakuranobaba Josaien at its foot is the easiest lunch of the day; Suizenji Jojuen garden is a short hop.",
+   "17 Nov &middot; alternative route","+1 h 18 m on the day"),
+ p(32.9736,130.9497,17,"alt","r","Kikuchi Gorge",
+   "Four kilometres of clear water and moss under broadleaf forest, and one of Kumamoto's best autumn walks. Closed after the quake, entry ban since lifted.",
+   "17 Nov &middot; only with a trade","11 min of driving, an hour of walking"),
  p(32.8220,131.1280,0,"opt","r","Takamori &middot; Minamiaso",
    "The caldera's southern floor, and the moss-covered cave shrine at Kamishikimi Kumano Imasu.",
    "if you add a night in the middle","just south of the crater"),
@@ -99,6 +102,7 @@ for q in PL:
                        gmap=gmap, lat=q["lat"], lon=q["lon"]))
 byl={p_["label"]:p_ for p_ in places}
 def line(*ls): return " ".join(f'{byl[l]["x"]},{byl[l]["y"]}' for l in ls)
+ALT17=line("Fukuoka Airport","Kumamoto Castle","Kikuchi Gorge","Nabegataki Falls","Kurokawa &middot; DeepSpot")
 ROUTES=[("17",line("Fukuoka Airport","Mameda-machi, Hita","Nabegataki Falls","Kurokawa &middot; DeepSpot")),
         ("18",line("Kurokawa &middot; DeepSpot","Daikanbo","Nakadake &middot; Kusasenri","Amano-Iwato","Takachiho &middot; the gorge")),
         ("19",line("Takachiho &middot; the gorge","Miyazaki","Aoshima Shrine","Udo Jingu","Obi, Nichinan")),
@@ -110,6 +114,7 @@ o.append('<rect x="0" y="0" width="1000" height="1383" class="sea"/>')
 o.append('<g class="land">')
 for nm,dpath in K["prefs"].items(): o.append(f'<path d="{dpath}"/>')
 o.append('</g>')
+o.append(f'<polyline class="rt rt17 rtalt" data-day="17" points="{ALT17}"/>')
 for day,pts in ROUTES:
     o.append(f'<polyline class="rt rt{day}" data-day="{day}" points="{pts}"/>')
 fk=byl["Fukuoka Airport"]; kg=byl["Kagoshima Airport"]
@@ -137,7 +142,7 @@ o.append(f'<path class="flyhead" d="{head(OUT_TIP, OUT_CTRL)}"/>')
 for i,q in enumerate(places):
     X,Y=q["x"],q["y"]
     o.append(f'<g class="mk mk-{q["kind"]}" data-day="{q["day"]}" data-i="{i}" tabindex="0" role="button" aria-label="{q["label"]}">')
-    if q["kind"]=="opt":
+    if q["kind"] in ("opt","alt"):
         o.append(f'<circle class="hit" cx="{X}" cy="{Y}" r="20"/><circle class="dot" cx="{X}" cy="{Y}" r="7.5"/>')
     elif q["kind"]=="bed":
         o.append(f'<circle class="hit" cx="{X}" cy="{Y}" r="27"/>'
@@ -158,7 +163,8 @@ svg="\n".join(o)
 
 lab=[]
 for i,q in enumerate(places):
-    extra="lb-opt" if q["kind"]=="opt" else ("lb-rt lb-bed" if q["kind"]=="bed" else "lb-rt")
+    extra=("lb-opt" if q["kind"]=="opt" else "lb-rt lb-alt" if q["kind"]=="alt"
+           else "lb-rt lb-bed" if q["kind"]=="bed" else "lb-rt")
     lab.append(f'<span class="lb lb-{q["anc"]} {extra}" data-day="{q["day"]}" data-i="{i}" '
                f'style="left:{q["l"]}%;top:{q["t"]}%">{q["label"]}</span>')
 L1,T1=pc(fk["x"]+228,fk["y"]-61); L2,T2=pc(kg["x"]+124,kg["y"]-92)

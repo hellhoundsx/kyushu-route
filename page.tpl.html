@@ -122,6 +122,8 @@
         vector-effect:non-scaling-stroke; transition:opacity .18s, stroke-width .18s; }
   .rt17 { stroke:var(--d17); } .rt18 { stroke:var(--d18); }
   .rt19 { stroke:var(--d19); } .rt20 { stroke:var(--d20); }
+  .rtalt { stroke-width:2; opacity:.4; }
+  .mapwrap[data-f="17"] .rt.rtalt { stroke-width:3; opacity:.75; }
   .fly { fill:none; stroke:var(--verm); stroke-width:2; stroke-dasharray:7 6;
          stroke-linecap:round; vector-effect:non-scaling-stroke; opacity:.85; }
   .flyhead { fill:var(--verm); stroke:none; opacity:.9; }
@@ -134,6 +136,8 @@
   .mk[data-day="19"] .dot { fill:var(--d19); } .mk[data-day="20"] .dot { fill:var(--d20); }
   .mk-air .dot { stroke:var(--verm); stroke-width:3.4; }
   .mk-opt .dot { fill:var(--surface); stroke:var(--amber); stroke-width:2.6; }
+  .mk-alt .dot { fill:var(--surface); stroke:var(--d17); stroke-width:2.8; }
+  .lb-alt { font-weight:400; color:var(--stone); font-size:.68rem; }
   /* overnight stops: a donut, so "we sleep here" reads at any size */
   .mk .ring { stroke:var(--ground); stroke-width:2.2; vector-effect:non-scaling-stroke; transition:r .16s; }
   .mk .core { fill:var(--ground); pointer-events:none; }
@@ -218,6 +222,7 @@
   .mapwrap[data-f="opt"] .lb-rt { opacity:0; pointer-events:none; }
   .mapwrap .lb-fly { opacity:.9 !important; pointer-events:none; }
   .mapwrap:not([data-f="opt"]) .lb-opt { opacity:0; pointer-events:none; }
+  .mapwrap[data-f="all"] .lb-alt { opacity:0; }
   .mapwrap[data-f="all"] .lb-opt { opacity:0; }
   .mapwrap[data-f="17"] .rt:not(.rt17), .mapwrap[data-f="18"] .rt:not(.rt18),
   .mapwrap[data-f="19"] .rt:not(.rt19), .mapwrap[data-f="20"] .rt:not(.rt20) { opacity:.14; }
@@ -514,6 +519,7 @@
       <span><i style="border-top-color:var(--d18)"></i> 18 Nov</span>
       <span><i style="border-top-color:var(--d19)"></i> 19 Nov</span>
       <span><i style="border-top-color:var(--d20)"></i> 20 Nov</span>
+      <span><i style="border-top-color:var(--d17);opacity:.5"></i> 17 Nov, via Kumamoto</span>
       <span><i class="donut"></i> where you sleep</span>
       <span><i class="dotm"></i> could add</span>
       <span><i style="border-top-color:var(--verm);border-top-style:dashed"></i> flights</span>
