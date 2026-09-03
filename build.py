@@ -38,12 +38,12 @@ PL=[
  p(32.7400,131.3750,18,"stop","r","Amano-Iwato",
    "The cave the sun goddess hid in, plus the river cave at Amanoyasugawara filled with thousands of stacked stone cairns.",
    "18 Nov &middot; 15:00, in daylight","sunset is about 17:20"),
- p(32.7117,131.3078,18,"bed","l","Takachiho &middot; the gorge",
-   "Kagura danced at the shrine at 20:00, about an hour. The self-row boat to Manai Falls goes at opening next morning.",
-   "Night 2 &middot; 18 Nov","2 h 27 m from Kurokawa via Daikanbo and the crater","One bed left in town","warn"),
+ p(32.7117,131.3078,18,"stop","t","Takachiho &middot; the gorge",
+   "Yokagura danced at Takachiho Shrine at 20:00, about an hour, every night. Dinner in town beforehand. The self-row boat to Manai Falls goes at opening the next morning.",
+   "18 Nov &middot; evening, and again at dawn","16 min from the Gokase house"),
  p(31.9170,131.4230,19,"bed","r","Miyazaki",
    "Nishitachi for the night out. Chicken nanban was invented in this prefecture &mdash; eat it here, with the local beef.",
-   "Night 3 &middot; 19 Nov","1 h 57 m from Takachiho, tolls","Not booked yet","open"),
+   "Night 3 &middot; 19 Nov","1 h 57 m from Takachiho, tolls; 16 min more from Gokase","Not booked yet","open"),
  p(31.7970,131.4620,19,"stop","r","Aoshima Shrine",
    "An island shrine ringed by the Devil's Washboard, a shelf of wave-cut rock ribs exposed at low tide.",
    "19 Nov &middot; afternoon","1 h 13 m round the coast from Miyazaki"),
@@ -78,9 +78,9 @@ PL=[
  p(32.8220,131.1280,0,"opt","r","Takamori &middot; Minamiaso",
    "The caldera's southern floor, and the moss-covered cave shrine at Kamishikimi Kumano Imasu.",
    "if you add a night in the middle","just south of the crater"),
- p(32.6580,131.1830,0,"opt","l","Gokase",
-   "Not a sight, but the closest place to Takachiho with rooms free &mdash; including a 2-bed, 2-bath cottage at &euro;137.",
-   "fallback if Takachiho stays full","14 km from Takachiho"),
+ p(32.6580,131.1830,18,"bed","l","Gokase",
+   "An old house rented whole: three bedrooms, two toilets, kitchen, free parking. Check in around 17:00, then it is 16 minutes back into Takachiho for dinner and the kagura.",
+   "Night 2 &middot; 18 Nov","16 min from Takachiho, either way"),
  p(32.5820,131.6650,0,"opt","r","Nobeoka",
    "The coastal gateway, if you would rather reach the sea on the 18th than the 19th.",
    "alternative shape for day 18","east of Takachiho"),
@@ -116,8 +116,8 @@ byl={p_["label"]:p_ for p_ in places}
 def line(*ls): return " ".join(f'{byl[l]["x"]},{byl[l]["y"]}' for l in ls)
 ALT17=line("Fukuoka Airport","Dazaifu Tenmangu","Kurume","Kumamoto Castle","Kikuchi Gorge","Nabegataki Falls","Kurokawa &middot; DeepSpot")
 ROUTES=[("17",line("Fukuoka Airport","Mameda-machi, Hita","Nabegataki Falls","Kurokawa &middot; DeepSpot")),
-        ("18",line("Kurokawa &middot; DeepSpot","Daikanbo","Nakadake &middot; Kusasenri","Amano-Iwato","Takachiho &middot; the gorge")),
-        ("19",line("Takachiho &middot; the gorge","Miyazaki","Aoshima Shrine","Udo Jingu","Obi, Nichinan")),
+        ("18",line("Kurokawa &middot; DeepSpot","Daikanbo","Nakadake &middot; Kusasenri","Amano-Iwato","Takachiho &middot; the gorge","Gokase")),
+        ("19",line("Gokase","Takachiho &middot; the gorge","Miyazaki","Aoshima Shrine","Udo Jingu","Obi, Nichinan")),
         ("20",line("Miyazaki","Sekinoo Falls","Kirishima Jingu","Kareigawa Station","Kagoshima Airport"))]
 
 o=[]
