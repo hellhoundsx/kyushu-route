@@ -80,7 +80,7 @@ PL=[
    "if you add a night in the middle","just south of the crater"),
  p(32.6580,131.1830,18,"bed","l","Gokase",
    "An old house rented whole: three bedrooms, two toilets, kitchen, free parking. Check in around 17:00, then it is 16 minutes back into Takachiho for dinner and the kagura.",
-   "Night 2 &middot; 18 Nov","16 min from Takachiho, either way"),
+   "Night 2 &middot; 18 Nov","16 min from Takachiho, either way","Booked","ok"),
  p(32.5820,131.6650,0,"opt","r","Nobeoka",
    "The coastal gateway, if you would rather reach the sea on the 18th than the 19th.",
    "alternative shape for day 18","east of Takachiho"),
