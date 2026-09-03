@@ -19,7 +19,7 @@ def p(lat,lon,day,kind,anc,label,note,when,leg="",status="",sclass=""):
 PL=[
  p(33.5859,130.4510,17,"air","t","Fukuoka Airport",
    "Land at nine, collect the car at ten. Kurokawa is only 1 h 45 m away direct, so the afternoon is yours.",
-   "17 Nov &middot; 09:00","arrive from Tokyo"),
+   "17 Nov &middot; 09:00","morning flight from Narita"),
  p(33.3213,130.9410,17,"stop","r","Mameda-machi, Hita",
    "A preserved Edo merchant street of white-walled townhouses. An hour is enough.",
    "17 Nov &middot; lunch","sits on the Fukuoka&ndash;Kurokawa line"),
@@ -54,7 +54,7 @@ PL=[
    "An intact samurai castle town, the turning point of the coast day.",
    "19 Nov &middot; late afternoon","southern end of the run"),
  p(31.8034,130.7194,20,"air","b","Kagoshima Airport",
-   "Car back at the airport, flight at 17:00, then four nights in Osaka to the 24th. Kirishima Jingu is 19 minutes off the direct run and sits beside the airport.",
+   "Car back at 13:00, flight at 17:00, then four nights in Osaka to the 24th. The four hours between have a free thermal footbath and a view of Sakurajima.",
    "20 Nov &middot; 17:00 to Osaka","1 h 34 m from Miyazaki, 1 h 53 m via Kirishima Jingu","Osaka 20&ndash;24 Nov","ok"),
 
  p(33.2790,131.5000,0,"opt","r","Beppu",
