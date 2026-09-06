@@ -6,7 +6,6 @@ VB=(148,110,815,1164)
 def pc(x,y): return ((x-VB[0])/VB[2]*100,(y-VB[1])/VB[3]*100)
 
 SHORT={"Kurokawa &middot; DeepSpot":"Kurokawa",
-       "Aoshima Shrine":"Aoshima",
        "Takachiho &middot; the gorge":"Takachiho",
        "Nakadake &middot; Kusasenri":"Nakadake",
        "Takamori &middot; Minamiaso":"Takamori"}
@@ -41,21 +40,18 @@ PL=[
  p(32.7117,131.3078,18,"stop","t","Takachiho &middot; the gorge",
    "Yokagura danced at Takachiho Shrine at 20:00, about an hour, every night. Dinner in town beforehand. The self-row boat to Manai Falls goes at opening the next morning.",
    "18 Nov &middot; evening, and again at dawn","16 min from the Gokase house"),
- p(31.9170,131.4230,19,"bed","r","Miyazaki",
-   "Nishitachi for the night out. Chicken nanban was invented in this prefecture &mdash; eat it here, with the local beef.",
-   "Night 3 &middot; 19 Nov","1 h 57 m from Takachiho, tolls; 16 min more from Gokase","Not booked yet","open"),
- p(31.7970,131.4620,19,"stop","r","Aoshima Shrine",
-   "An island shrine ringed by the Devil's Washboard, a shelf of wave-cut rock ribs exposed at low tide.",
-   "19 Nov &middot; afternoon","1 h 13 m round the coast from Miyazaki"),
+ p(31.80158,131.46691,19,"bed","r","Aoshima",
+   "Rakuten STAY HOUSE x WILL STYLE, room 102: three bedrooms, kitchen, free parking, &euro;174. The island shrine and the Devil's Washboard are a fifteen-minute walk from the door, not a drive.",
+   "Night 3 &middot; 19 Nov","2 h 05 m from Takachiho, tolls","Booked &middot; Ricardo","ok"),
  p(31.6330,131.4570,19,"stop","r","Udo Jingu",
    "A vermilion shrine built inside a sea cave in the cliff face. The most striking single thing on this coast.",
    "19 Nov &middot; afternoon","on the same coast run"),
  p(31.6220,131.3530,19,"stop","b","Obi, Nichinan",
-   "An intact samurai castle town, the turning point of the coast day.",
+   "An intact samurai castle town, the turning point of the coast day before you turn back north to Aoshima.",
    "19 Nov &middot; late afternoon","southern end of the run"),
  p(31.8034,130.7194,20,"air","b","Kagoshima Airport",
    "Car back at 13:00, flight at 17:00, then four nights in Osaka to the 24th. The four hours between have a free thermal footbath and a view of Sakurajima.",
-   "20 Nov &middot; 17:00 to Osaka","1 h 34 m from Miyazaki, 1 h 53 m via Kirishima Jingu","Osaka 20&ndash;24 Nov","ok"),
+   "20 Nov &middot; 17:00 to Osaka","1 h 34 m from Aoshima direct, 1 h 58 m with the three stops","Osaka 20&ndash;24 Nov","ok"),
 
  p(33.5215,130.5349,17,"alt","r","Dazaifu Tenmangu",
    "A major shrine 30 min out of Fukuoka, and about thirty shops along its approach grilling umegae mochi to order &mdash; red bean inside, plum-blossom stamped on a hot iron plate.",
@@ -99,8 +95,8 @@ def line(*ls): return " ".join(f'{byl[l]["x"]},{byl[l]["y"]}' for l in ls)
 ALT17=line("Fukuoka Airport","Dazaifu Tenmangu","Kurume","Kumamoto Castle","Kikuchi Gorge","Nabegataki Falls","Kurokawa &middot; DeepSpot")
 ROUTES=[("17",line("Fukuoka Airport","Mameda-machi, Hita","Nabegataki Falls","Kurokawa &middot; DeepSpot")),
         ("18",line("Kurokawa &middot; DeepSpot","Daikanbo","Nakadake &middot; Kusasenri","Amano-Iwato","Takachiho &middot; the gorge","Gokase")),
-        ("19",line("Gokase","Takachiho &middot; the gorge","Miyazaki","Aoshima Shrine","Udo Jingu","Obi, Nichinan")),
-        ("20",line("Miyazaki","Sekinoo Falls","Kirishima Jingu","Kareigawa Station","Kagoshima Airport"))]
+        ("19",line("Gokase","Takachiho &middot; the gorge","Aoshima","Udo Jingu","Obi, Nichinan","Aoshima")),
+        ("20",line("Aoshima","Sekinoo Falls","Kirishima Jingu","Kareigawa Station","Kagoshima Airport"))]
 
 o=[]
 o.append(f'<svg class="map" viewBox="{VB[0]} {VB[1]} {VB[2]} {VB[3]}" role="img" aria-label="Route map of Kyushu from Fukuoka to Kagoshima">')
