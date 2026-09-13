@@ -1,12 +1,13 @@
 # Japan, 17 Nov – 4 Dec 2026 — 17 nights
 
-Kyushu by car (17–20 Nov) planned in full, then Osaka, Kyoto via Nara, and Tokyo recorded as dates awaiting plans.
+Kyushu by car (17–20 Nov) and Osaka planned and booked. Kyoto via Nara planned, beds still to book, with an onsen night at Hakone on the way to Tokyo.
 
 | Leg | Dates | Nights | Status |
 |---|---|---|---|
 | Kyushu, by car | 17–20 Nov | 3 | planned |
-| Osaka | 20–24 Nov | 4 | TBD |
-| Kyoto, via Nara | 24–28 Nov | 4 | TBD |
+| Osaka | 20–24 Nov | 4 | booked |
+| Kyoto, via Nara | 24–27 Nov | 3 | planned, beds to book |
+| Hakone, onsen | 27–28 Nov | 1 | planned, bed to book |
 | Tokyo | 28 Nov – 4 Dec | 6 | TBD |
 
 **Live page:** https://hellhoundsx.github.io/kyushu-route/

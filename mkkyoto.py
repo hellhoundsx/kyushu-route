@@ -104,9 +104,11 @@ SPOTS = [
 ]
 # a few anchors sit close enough that their labels collide; nudge those labels
 # off the marker by a percentage of the frame. The marker itself never moves.
-NUDGE = {"Eikan-do": (0, -2.4), "Nijo Castle": (0, -2.8)}
+NUDGE = {"Eikan-do": (0, -2.4), "Nijo Castle": (0, -3.2)}
 
-HOTEL   = (35.0109,135.7596,"Monterey &middot; Karasuma Oike")
+# no hotel is chosen yet, so the green marker is the interchange the plan leans
+# on rather than a specific bed
+HOTEL   = (35.0109,135.7596,"Karasuma Oike &middot; both subways")
 STATION = (34.9858,135.7588,"Kyoto Station")
 
 o = ['<div class="mapwrap">',
