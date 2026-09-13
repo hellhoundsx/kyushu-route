@@ -43,7 +43,11 @@ python3 mkmap.py          # japan.geojson -> src/kyushu.json
 python3 build.py          # src/kyushu.json -> src/map.frag.html, src/places.final.json
 python3 mknational.py     # japan.geojson -> src/japan_national.json
 python3 build_national.py # src/japan_national.json -> src/national.frag.html
+python3 mkkyoto.py        # src/kyoto_wards.geojson -> src/kyoto.frag.html
 ```
+
+`mkkyoto.py` needs no download: `src/kyoto_wards.geojson` is committed, being only
+645 KB &mdash; the eleven wards of Kyoto city from the MLIT N03 administrative boundaries.
 
 `mkmap.py` and `mknational.py` need `src/japan.geojson`, a prefecture-level GeoJSON of
 Japan. It is ~10 MB so it is not committed; fetch a Japan admin-level-1 GeoJSON with a

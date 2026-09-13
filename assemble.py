@@ -16,6 +16,7 @@ BUILD.mkdir(exist_ok=True)
 J = dict(ensure_ascii=False, separators=(",", ":"))
 
 svg, labels = (SRC/"map.frag.html").read_text(encoding="utf-8").split("\n<!--LABELS-->\n")
+kyoto, ktri = (SRC/"kyoto.frag.html").read_text(encoding="utf-8").split("\n<!--KTRIANGLE-->\n")
 nsvg, nlab = (SRC/"national.frag.html").read_text(encoding="utf-8").split("\n<!--NLABELS-->\n")
 places = json.loads((SRC/"places.final.json").read_text(encoding="utf-8"))
 
@@ -35,6 +36,8 @@ out = (ROOT/"page.tpl.html").read_text(encoding="utf-8")
 for token, value in (("@@MAP@@", svg),
                      ("@@LABELS@@", labels),
                      ("@@NATIONAL@@", nsvg + "\n" + nlab),
+                     ("@@KYOTO@@", kyoto),
+                     ("@@KTRIANGLE@@", ktri),
                      ("@@PLACES@@", json.dumps(slim, **J)),
                      ("@@PICS@@", json.dumps(PIC, **J)),
                      ("@@CREDITS@@", "; ".join(credits))):
