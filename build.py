@@ -1,5 +1,6 @@
 import json, math
-S="/private/tmp/claude-502/-Users-ricardo-gomes-Documents-apps-Nexus/0c7e087e-eb8c-40da-bc86-9cfbdc429ed8/scratchpad/"
+import pathlib
+S=str(pathlib.Path(__file__).resolve().parent/"src")+"/"
 K=json.load(open(S+"kyushu.json")); M=K["meta"]; KX,SX,LON0,LAT1=M["kx"],M["sx"],M["lon0"],M["lat1"]
 def P(lat,lon): return ((lon-LON0)*KX*SX,(LAT1-lat)*SX)
 VB=(148,110,815,1164)

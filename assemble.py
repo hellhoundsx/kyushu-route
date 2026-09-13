@@ -1,27 +1,49 @@
-import json
-S="/private/tmp/claude-502/-Users-ricardo-gomes-Documents-apps-Nexus/0c7e087e-eb8c-40da-bc86-9cfbdc429ed8/scratchpad/"
-svg,labels=open(S+"map.frag.html").read().split("\n<!--LABELS-->\n")
-pl=json.load(open(S+"places.final.json"))
-slim=[{k:p[k] for k in ("kind","label","note","when","leg","status","sclass","day","l","t","gmap")} for p in pl]
-out=(open(S+"page.tpl.html").read()
-     .replace("@@MAP@@",svg)
-     .replace("@@LABELS@@",labels)
-     .replace("@@PLACES@@",json.dumps(slim,ensure_ascii=False)))
-pics=json.load(open(S+"pics.json"))
-PIC={r["label"]:{"b":r["b64"],"c":"%s / %s, Wikimedia Commons"%(r["author"] or "unknown", r["lic"])} for r in pics}
-out=out.replace("@@PICS@@", json.dumps(PIC, ensure_ascii=False))
-seen=[]
+# -*- coding: utf-8 -*-
+"""Fragment + template -> one self-contained page.
+
+Inputs live in src/ (the map fragments and the places list) and in the repo root
+(page.tpl.html, pics.json). Output goes to build/, which mksite.py then wraps.
+Paths resolve from this file, not the working directory, so it runs from anywhere.
+"""
+import json, pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parent
+SRC, BUILD = ROOT/"src", ROOT/"build"
+BUILD.mkdir(exist_ok=True)
+
+# compact separators: this is what the published page uses, and at ~1 MB of
+# base64 image data the spaces are not free
+J = dict(ensure_ascii=False, separators=(",", ":"))
+
+svg, labels = (SRC/"map.frag.html").read_text(encoding="utf-8").split("\n<!--LABELS-->\n")
+nsvg, nlab = (SRC/"national.frag.html").read_text(encoding="utf-8").split("\n<!--NLABELS-->\n")
+places = json.loads((SRC/"places.final.json").read_text(encoding="utf-8"))
+
+KEEP = ("kind", "label", "note", "when", "leg", "status", "sclass", "day", "l", "t", "gmap")
+slim = [{k: p[k] for k in KEEP} for p in places]
+
+pics = json.loads((ROOT/"pics.json").read_text(encoding="utf-8"))
+PIC = {r["label"]: {"b": r["b64"],
+                    "c": "%s / %s, Wikimedia Commons" % (r["author"] or "unknown", r["lic"])}
+       for r in pics}
+credits = []
 for r in pics:
-    t="%s (%s)"%(r["author"] or "unknown", r["lic"])
-    if t not in seen: seen.append(t)
-out=out.replace("@@CREDITS@@", "; ".join(seen))
-nsvg,nlab=open(S+"national.frag.html").read().split("\n<!--NLABELS-->\n")
-out=out.replace("@@NATIONAL@@", nsvg+"\n"+nlab)
-def ascii_esc(t):
-    return "".join(c if ord(c)<128 else "&#%d;"%ord(c) for c in t)
-out=ascii_esc(out)
-open(S+"kyushu-route.html","w",encoding="ascii").write(out)
-print("written",len(out),"chars")
-for tok in ("@@MAP@@","@@LABELS@@","@@PLACES@@"):
-    assert tok not in out, tok
-print("no placeholders left")
+    t = "%s (%s)" % (r["author"] or "unknown", r["lic"])
+    if t not in credits: credits.append(t)
+
+out = (ROOT/"page.tpl.html").read_text(encoding="utf-8")
+for token, value in (("@@MAP@@", svg),
+                     ("@@LABELS@@", labels),
+                     ("@@NATIONAL@@", nsvg + "\n" + nlab),
+                     ("@@PLACES@@", json.dumps(slim, **J)),
+                     ("@@PICS@@", json.dumps(PIC, **J)),
+                     ("@@CREDITS@@", "; ".join(credits))):
+    assert token in out, "template is missing " + token
+    out = out.replace(token, value)
+
+# the page is written as pure ASCII; everything above latin-1 becomes an entity
+out = "".join(c if ord(c) < 128 else "&#%d;" % ord(c) for c in out)
+assert "@@" not in out, "a placeholder survived"
+
+(BUILD/"kyushu-route.html").write_text(out, encoding="ascii")
+print("build/kyushu-route.html", len(out), "chars |", len(slim), "places |", len(PIC), "pictures")

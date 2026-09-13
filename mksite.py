@@ -1,11 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Wraps the artifact fragment into a standalone page for GitHub Pages.
-The artifact host supplies doctype/head/body; Pages does not."""
-import re, shutil, pathlib
-frag = open("kyushu-route.html", encoding="utf-8").read()
-title = re.search(r"<title>(.*?)</title>", frag)
-title = title.group(1) if title else "Kyushu Ground Route"
+"""Wraps the assembled fragment into the page GitHub Pages serves.
+
+assemble.py emits a body fragment with a bare <title>; Pages needs a whole
+document. Output is index.html at the repo root, which is what .nojekyll and the
+Pages settings point at.
+"""
+import re, pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parent
+frag = (ROOT/"build"/"kyushu-route.html").read_text(encoding="utf-8")
+
+m = re.search(r"<title>(.*?)</title>", frag)
+title = m.group(1) if m else "Kyushu Ground Route"
 frag = re.sub(r"<title>.*?</title>\s*", "", frag, count=1)
+
 HEAD = """<!doctype html>
 <html lang="en">
 <head>
@@ -20,8 +28,7 @@ HEAD = """<!doctype html>
 </head>
 <body>
 """ % title
-out = pathlib.Path("site/index.html")
-out.write_text(HEAD + frag + "\n</body>\n</html>\n", encoding="utf-8")
-for f in ("build.py","build_national.py","assemble.py","page.tpl.html","pics.json","mksite.py"):
-    shutil.copy(f, "site/"+f)
-print("site/index.html", round(out.stat().st_size/1048576,2), "MB |", title)
+
+out = ROOT/"index.html"
+out.write_text(HEAD + frag + "\n</body>\n</html>\n", encoding="ascii")
+print("index.html", round(out.stat().st_size/1048576, 2), "MB |", title)

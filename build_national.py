@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json, math
-S="/private/tmp/claude-502/-Users-ricardo-gomes-Documents-apps-Nexus/0c7e087e-eb8c-40da-bc86-9cfbdc429ed8/scratchpad/"
+import pathlib
+S=str(pathlib.Path(__file__).resolve().parent/"src")+"/"
 N=json.load(open(S+"japan_national.json")); M=N["meta"]
 KX,SX,LON0,LAT1=M["kx"],M["sx"],M["lon0"],M["lat1"]
 def P(la,lo): return ((lo-LON0)*KX*SX,(LAT1-la)*SX)

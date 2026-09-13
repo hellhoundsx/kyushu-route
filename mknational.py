@@ -1,5 +1,6 @@
 import json, math
-S="/private/tmp/claude-502/-Users-ricardo-gomes-Documents-apps-Nexus/0c7e087e-eb8c-40da-bc86-9cfbdc429ed8/scratchpad/"
+import pathlib
+S=str(pathlib.Path(__file__).resolve().parent/"src")+"/"
 # Kyushu -> Kanto: every prefecture the trip's corridor passes through or near
 KEEP=set(list(range(8,15))+list(range(18,31))+list(range(31,40))+list(range(40,47)))
 LAT0,LAT1,LON0,LON1 = 30.60, 36.60, 129.20, 140.80

@@ -1,6 +1,7 @@
 import json, math
 
-SCRATCH = "/private/tmp/claude-502/-Users-ricardo-gomes-Documents-apps-Nexus/0c7e087e-eb8c-40da-bc86-9cfbdc429ed8/scratchpad/"
+import pathlib
+SCRATCH=str(pathlib.Path(__file__).resolve().parent/"src")+"/"
 KYUSHU = {40:"Fukuoka",41:"Saga",42:"Nagasaki",43:"Kumamoto",44:"Oita",45:"Miyazaki",46:"Kagoshima"}
 
 # clip box: mainland Kyushu only (drops Tsushima, Iki, Goto, Amami, Tokara)
