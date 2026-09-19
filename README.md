@@ -1,13 +1,14 @@
-# Japan, 17 Nov – 4 Dec 2026 — 17 nights
+# Japan, 16 Nov – 4 Dec 2026 — 18 nights
 
-Kyushu by car (17–20 Nov), Osaka and Kyoto all booked. One onsen night at Hakone on the 27th and six nights in Tokyo still to find.
+Kyushu by car (17–20 Nov), Osaka, Kyoto and the Hakone onsen night all booked. Six nights in Tokyo still to find.
 
 | Leg | Dates | Nights | Status |
 |---|---|---|---|
+| Tokyo airport | 16–17 Nov | 1 | booked |
 | Kyushu, by car | 17–20 Nov | 3 | planned |
 | Osaka | 20–24 Nov | 4 | booked |
 | Kyoto, via Nara | 24–27 Nov | 3 | booked |
-| Hakone, onsen | 27–28 Nov | 1 | planned, bed to book |
+| Hakone, onsen | 27–28 Nov | 1 | booked |
 | Tokyo | 28 Nov – 4 Dec | 6 | TBD |
 
 **Live page:** https://hellhoundsx.github.io/kyushu-route/
